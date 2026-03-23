@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Alex Maren — Designer & Developer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        sans:  ['"DM Sans"', 'sans-serif'],
+      },
+      colors: {
+        ink:    { DEFAULT:'#0f1624', soft:'#5a6480' },
+        slate:  { 50:'#f0f2f7', 100:'#e6e9f2' },
+        navy:   { 900:'#080d1a', 800:'#0d1526', 700:'#111c33' },
+        blue:   { DEFAULT:'#2f54eb', dark:'#5b7fff', soft:'rgba(47,84,235,0.08)' },
+      },
+      animation: {
+        'fade-up':    'fadeUp 0.65s ease forwards',
+        'fade-up-d1': 'fadeUp 0.65s 0.1s ease forwards',
+        'fade-up-d2': 'fadeUp 0.65s 0.2s ease forwards',
+        'fade-up-d3': 'fadeUp 0.65s 0.3s ease forwards',
+        'fade-up-d4': 'fadeUp 0.65s 0.4s ease forwards',
+        'fade-up-d6': 'fadeUp 0.65s 0.6s ease forwards',
+        'slide-down': 'slideDown 0.2s ease forwards',
+        'fade-in':    'fadeIn 0.28s ease forwards',
+        'bounce-dot': 'bounceDot 1.8s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeUp:    { from:{ opacity:'0', transform:'translateY(18px)' }, to:{ opacity:'1', transform:'none' } },
+        slideDown: { from:{ opacity:'0', transform:'translateY(-8px)' }, to:{ opacity:'1', transform:'none' } },
+        fadeIn:    { from:{ opacity:'0' }, to:{ opacity:'1' } },
+        bounceDot: { '0%,100%':{ transform:'translateY(0)', opacity:'1' }, '75%':{ transform:'translateY(10px)', opacity:'0' } },
+      },
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  /* grid bg */
+  .grid-bg::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(47,84,235,.08) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(47,84,235,.08) 1px,transparent 1px);
+    background-size:52px 52px;
+  }
+  .dark .grid-bg::before{
+    background-image:linear-gradient(rgba(91,127,255,.07) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(91,127,255,.07) 1px,transparent 1px);
+  }
+  /* hero glow */
+  .hero-glow::after{
+    content:'';position:absolute;top:-80px;right:-120px;
+    width:560px;height:560px;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(47,84,235,.14) 0%,transparent 68%);
+  }
+  /* scroll reveal */
+  .sr{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+  .sr.on{opacity:1;transform:none}
+  /* eyebrow line */
+  .eyebrow-line::before{content:'';display:block;width:26px;height:1px;background:currentColor}
+  /* overlay scrollbar */
+  .overlay-scroll{scrollbar-width:thin;scrollbar-color:rgba(47,84,235,.3) transparent}
+  /* gallery item hover caption */
+  .gallery-item .cap{opacity:0;transition:opacity .25s}
+  .gallery-item:hover .cap{opacity:1}
+  /* wc hover */
+  .wc{transition:transform .28s cubic-bezier(.4,0,.2,1),box-shadow .28s,border-color .28s}
+  .wc:hover{transform:translateY(-4px)}
+  /* thumb scale */
+  .thumb-inner{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+  .wc:hover .thumb-inner{transform:scale(1.04)}
+  /* wcta arrow */
+  .wcta{transition:gap .28s}
+  .wc:hover .wcta{gap:.6rem}
+  /* blog row hover */
+  .brow{transition:padding-left .28s}
+  .brow:hover{padding-left:.4rem}
+  .brow:hover .btt{color:#2f54eb}
+  .dark .brow:hover .btt{color:#5b7fff}
+  /* custom scrollbar overlay panels */
+  #pv,#prv{scrollbar-width:thin;scrollbar-color:rgba(47,84,235,.25) transparent}
+</style>
+</head>
+<body class="grid-bg font-sans bg-slate-50 text-ink dark:bg-navy-900 dark:text-slate-200 transition-colors duration-300 overflow-x-hidden">
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav" class="fixed top-0 left-0 right-0 z-[200] h-[60px] flex items-center justify-between px-[clamp(1.25rem,5vw,3.5rem)] bg-slate-50/85 dark:bg-navy-900/90 backdrop-blur-lg border-b border-blue-500/10 dark:border-blue-dark/10 transition-colors duration-300">
+  <a href="#" onclick="goHome(event)" class="font-serif text-[1.15rem] text-ink dark:text-slate-200 no-underline tracking-tight">Alex<span class="text-blue dark:text-blue-dark">.</span></a>
+  <div class="flex items-center gap-1">
+    <ul class="hidden md:flex items-center gap-0.5 list-none">
+      <li><a href="#about"   class="nl block px-3 py-1.5 text-sm text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">About</a></li>
+      <li><a href="#work"    class="nl block px-3 py-1.5 text-sm text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Work</a></li>
+      <li><a href="#blog"    class="nl block px-3 py-1.5 text-sm text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Blog</a></li>
+      <li><a href="#contact" class="nl block px-3 py-1.5 text-sm text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Contact</a></li>
+    </ul>
+    <!-- theme toggle -->
+    <div class="flex items-center bg-blue-500/7 dark:bg-blue-dark/10 rounded-[10px] p-[3px] gap-[2px] ml-3">
+      <button onclick="setTheme('light',this)" data-m="light" class="th-btn on flex items-center justify-center w-7 h-7 rounded-[7px] text-ink/50 dark:text-slate-500 transition-all" title="Light">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button onclick="setTheme('system',this)" data-m="system" class="th-btn flex items-center justify-center w-7 h-7 rounded-[7px] text-ink/50 dark:text-slate-500 transition-all" title="System">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+      <button onclick="setTheme('dark',this)" data-m="dark" class="th-btn flex items-center justify-center w-7 h-7 rounded-[7px] text-ink/50 dark:text-slate-500 transition-all" title="Dark">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
+    </div>
+    <!-- hamburger -->
+    <button onclick="togMob()" class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1 ml-2" aria-label="Menu">
+      <span class="block w-[22px] h-[2px] bg-ink dark:bg-slate-200 rounded-sm transition-all"></span>
+      <span class="block w-[22px] h-[2px] bg-ink dark:bg-slate-200 rounded-sm transition-all"></span>
+      <span class="block w-[22px] h-[2px] bg-ink dark:bg-slate-200 rounded-sm transition-all"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div id="mm" class="hidden fixed top-[60px] left-0 right-0 z-[199] bg-slate-50/90 dark:bg-navy-900/94 backdrop-blur-lg border-b border-blue-500/10 dark:border-blue-dark/10 px-[clamp(1.25rem,5vw,3.5rem)] py-3 flex-col gap-0.5">
+  <a href="#about"   onclick="closeMob()" class="px-2 py-2.5 text-[.95rem] text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">About</a>
+  <a href="#work"    onclick="closeMob()" class="px-2 py-2.5 text-[.95rem] text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Work</a>
+  <a href="#blog"    onclick="closeMob()" class="px-2 py-2.5 text-[.95rem] text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Blog</a>
+  <a href="#contact" onclick="closeMob()" class="px-2 py-2.5 text-[.95rem] text-ink/60 dark:text-slate-400 rounded-lg hover:text-ink dark:hover:text-slate-200 hover:bg-blue-500/6 transition-all">Contact</a>
+</div>
+
+<main class="pt-[60px] relative z-[1]">
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero" class="hero-glow relative max-w-[840px] mx-auto px-[clamp(1.25rem,5vw,2rem)] min-h-[calc(100vh-60px)] flex flex-col justify-center">
+    <div class="eyebrow-line flex items-center gap-3 text-[.78rem] tracking-[.1em] uppercase text-blue dark:text-blue-dark font-medium mb-6 relative z-[1] opacity-0 animate-fade-up-d1">Available for projects</div>
+    <h1 class="font-serif text-[clamp(2.8rem,7vw,5.4rem)] leading-[1.08] tracking-[-0.025em] text-ink dark:text-slate-100 mb-6 relative z-[1] opacity-0 animate-fade-up-d2">
+      Designer &amp;<br><em class="text-blue dark:text-blue-dark">developer</em><br>based in Jakarta.
+    </h1>
+    <p class="text-[clamp(.975rem,2vw,1.1rem)] text-ink/60 dark:text-slate-400 max-w-[480px] leading-[1.75] mb-10 relative z-[1] opacity-0 animate-fade-up-d3">
+      I build thoughtful digital things — from design systems to full-stack products. I care about the details that make software feel <em>right</em>.
+    </p>
+    <div class="flex flex-wrap gap-3 relative z-[1] opacity-0 animate-fade-up-d4">
+      <a href="#work" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue dark:bg-blue-dark text-white text-sm font-medium rounded-full hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] transition-all">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        View my work
+      </a>
+      <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2.5 bg-transparent text-ink/60 dark:text-slate-400 text-sm font-medium rounded-full border border-blue-500/15 dark:border-blue-dark/20 hover:text-ink dark:hover:text-slate-200 hover:border-blue dark:hover:border-blue-dark hover:bg-blue-500/6 transition-all">Get in touch</a>
+    </div>
+    <div class="flex items-center gap-2 mt-14 text-ink/40 dark:text-slate-600 text-[.78rem] relative z-[1] opacity-0 animate-fade-up-d6">
+      <div class="w-5 h-8 border border-blue-500/20 dark:border-blue-dark/20 rounded-full relative flex justify-center">
+        <span class="absolute top-[5px] w-[3px] h-[6px] bg-blue dark:bg-blue-dark rounded-full animate-bounce-dot"></span>
+      </div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about" class="bg-slate-50 dark:bg-navy-900">
+    <div class="max-w-[840px] mx-auto px-[clamp(1.25rem,5vw,2rem)] py-[clamp(4rem,9vw,7rem)]">
+      <div class="sh flex items-center gap-4 mb-12 sr">
+        <span class="text-[.72rem] tracking-[.12em] uppercase text-blue dark:text-blue-dark font-medium whitespace-nowrap">About</span>
+        <h2 class="font-serif text-[clamp(1.8rem,4vw,2.6rem)] tracking-tight leading-tight whitespace-nowrap">A bit about me</h2>
+        <div class="flex-1 h-px bg-blue-500/10 dark:bg-blue-dark/15 min-w-[16px]"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">
+        <div class="sr" style="transition-delay:.06s">
+          <p class="text-ink/60 dark:text-slate-400 leading-[1.8] mb-4">I'm Alex — a designer-developer hybrid who's been building things for the web for over six years. Started in graphic design, fell in love with code, and never really separated the two.</p>
+          <p class="text-ink/60 dark:text-slate-400 leading-[1.8] mb-4">I work with <strong class="text-ink dark:text-slate-200 font-medium">startups and creative studios</strong> to design and build products that feel considered — the kind of software that just feels good to use.</p>
+          <p class="text-ink/60 dark:text-slate-400 leading-[1.8]">When I'm not at the computer, you'll find me at a coffee shop, shooting on film, or endlessly reorganising my Notion workspace.</p>
+        </div>
+        <div class="sr" style="transition-delay:.13s">
+          <h4 class="text-[.72rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-3">What I work with</h4>
+          <ul class="flex flex-wrap gap-1.5 list-none mb-6">
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Figma</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">React</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">TypeScript</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Next.js</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">CSS / Motion</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Node.js</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Postgres</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Framer</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Webflow</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Photography</li>
+          </ul>
+          <h4 class="text-[.72rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-3">Currently</h4>
+          <ul class="flex flex-wrap gap-1.5 list-none">
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Open to freelance</li>
+            <li class="px-3 py-1 text-[.78rem] bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full border border-transparent hover:border-blue dark:hover:border-blue-dark transition-all cursor-default">Building in public</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WORK ═══ -->
+  <section id="work" class="bg-slate-100 dark:bg-navy-800">
+    <div class="max-w-[840px] mx-auto px-[clamp(1.25rem,5vw,2rem)] py-[clamp(4rem,9vw,7rem)]">
+      <div class="sh flex items-center gap-4 mb-12 sr">
+        <span class="text-[.72rem] tracking-[.12em] uppercase text-blue dark:text-blue-dark font-medium whitespace-nowrap">Work</span>
+        <h2 class="font-serif text-[clamp(1.8rem,4vw,2.6rem)] tracking-tight leading-tight whitespace-nowrap">Selected projects</h2>
+        <div class="flex-1 h-px bg-blue-500/10 dark:bg-blue-dark/15 min-w-[16px]"></div>
+      </div>
+      <div id="wgrid" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
+    </div>
+  </section>
+
+  <!-- ═══ BLOG ═══ -->
+  <section id="blog" class="bg-slate-50 dark:bg-navy-900">
+    <div class="max-w-[840px] mx-auto px-[clamp(1.25rem,5vw,2rem)] py-[clamp(4rem,9vw,7rem)]">
+      <div class="sh flex items-center gap-4 mb-12 sr">
+        <span class="text-[.72rem] tracking-[.12em] uppercase text-blue dark:text-blue-dark font-medium whitespace-nowrap">Writing</span>
+        <h2 class="font-serif text-[clamp(1.8rem,4vw,2.6rem)] tracking-tight leading-tight whitespace-nowrap">Thoughts &amp; notes</h2>
+        <div class="flex-1 h-px bg-blue-500/10 dark:bg-blue-dark/15 min-w-[16px]"></div>
+      </div>
+      <div id="blist" class="flex flex-col"></div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact" class="bg-slate-100 dark:bg-navy-800">
+    <div class="max-w-[840px] mx-auto px-[clamp(1.25rem,5vw,2rem)] py-[clamp(4rem,9vw,7rem)]">
+      <div class="sh flex items-center gap-4 mb-12 sr">
+        <span class="text-[.72rem] tracking-[.12em] uppercase text-blue dark:text-blue-dark font-medium whitespace-nowrap">Contact</span>
+        <h2 class="font-serif text-[clamp(1.8rem,4vw,2.6rem)] tracking-tight leading-tight whitespace-nowrap">Let's talk</h2>
+        <div class="flex-1 h-px bg-blue-500/10 dark:bg-blue-dark/15 min-w-[16px]"></div>
+      </div>
+      <div class="max-w-[500px] sr" style="transition-delay:.08s">
+        <h3 class="font-serif text-[clamp(1.55rem,4vw,2.4rem)] tracking-tight leading-tight mb-4">Got a project in mind?<br>I'd love to hear about it.</h3>
+        <p class="text-ink/60 dark:text-slate-400 leading-[1.75] mb-9">Available for freelance work and select full-time roles. Whether it's a quick question or a full project brief — my inbox is always open.</p>
+        <div class="flex flex-wrap gap-2.5">
+          <a href="mailto:alex@example.com" class="c-link inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-navy-700 border border-blue-500/12 dark:border-blue-dark/15 rounded-full text-sm font-medium text-ink dark:text-slate-200 hover:border-blue dark:hover:border-blue-dark hover:text-blue dark:hover:text-blue-dark hover:bg-blue-500/6 transition-all">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email me
+          </a>
+          <a href="#" onclick="return false;" class="c-link inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-navy-700 border border-blue-500/12 dark:border-blue-dark/15 rounded-full text-sm font-medium text-ink dark:text-slate-200 hover:border-blue dark:hover:border-blue-dark hover:text-blue dark:hover:text-blue-dark hover:bg-blue-500/6 transition-all">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="#" onclick="return false;" class="c-link inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-navy-700 border border-blue-500/12 dark:border-blue-dark/15 rounded-full text-sm font-medium text-ink dark:text-slate-200 hover:border-blue dark:hover:border-blue-dark hover:text-blue dark:hover:text-blue-dark hover:bg-blue-500/6 transition-all">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="#" onclick="return false;" class="c-link inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-navy-700 border border-blue-500/12 dark:border-blue-dark/15 rounded-full text-sm font-medium text-ink dark:text-slate-200 hover:border-blue dark:hover:border-blue-dark hover:text-blue dark:hover:text-blue-dark hover:bg-blue-500/6 transition-all">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            Twitter / X
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="relative z-[1] border-t border-blue-500/10 dark:border-blue-dark/12 px-[clamp(1.25rem,5vw,3.5rem)] py-7 flex items-center justify-between flex-wrap gap-3 text-ink/40 dark:text-slate-600 text-[.78rem]">
+  <span>&#169; 2025 Alex Maren. Made with care.</span>
+  <span>Jakarta, Indonesia &middot; <a href="#" class="hover:text-blue dark:hover:text-blue-dark transition-colors">Download CV</a></span>
+</footer>
+
+<!-- ═══ BLOG POST OVERLAY ═══ -->
+<div id="pv" class="hidden fixed inset-0 z-[300] bg-slate-50 dark:bg-navy-900 overflow-y-auto overlay-scroll">
+  <div class="sticky top-0 z-10 h-[60px] flex items-center px-[clamp(1.25rem,5vw,3.5rem)] bg-slate-50/90 dark:bg-navy-900/92 backdrop-blur-lg border-b border-blue-500/10 dark:border-blue-dark/12">
+    <button onclick="closePost()" class="flex items-center gap-2 bg-transparent border-none cursor-pointer text-ink/50 dark:text-slate-500 text-sm font-sans hover:text-blue dark:hover:text-blue-dark transition-colors">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to writing
+    </button>
+  </div>
+  <div id="pc" class="max-w-[660px] mx-auto px-[clamp(1.25rem,5vw,2rem)] py-12 pb-24"></div>
+</div>
+
+<!-- ═══ PROJECT DETAIL OVERLAY ═══ -->
+<div id="prv" class="hidden fixed inset-0 z-[300] bg-slate-50 dark:bg-navy-900 overflow-y-auto overlay-scroll">
+  <div class="sticky top-0 z-10 h-[60px] flex items-center justify-between px-[clamp(1.25rem,5vw,3.5rem)] bg-slate-50/90 dark:bg-navy-900/92 backdrop-blur-lg border-b border-blue-500/10 dark:border-blue-dark/12">
+    <button onclick="closeProject()" class="flex items-center gap-2 bg-transparent border-none cursor-pointer text-ink/50 dark:text-slate-500 text-sm font-sans hover:text-blue dark:hover:text-blue-dark transition-colors">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to work
+    </button>
+    <span id="prv-num" class="text-xs text-ink/40 dark:text-slate-600"></span>
+  </div>
+  <div id="prc" class="max-w-[800px] mx-auto px-[clamp(1.25rem,5vw,2rem)] pb-24"></div>
+</div>
+
+<!-- ═══ LIGHTBOX ═══ -->
+<div id="lb" class="hidden fixed inset-0 z-[500] bg-black/92 items-center justify-center">
+  <button onclick="closeLb()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/12 border-none text-white flex items-center justify-center cursor-pointer hover:bg-white/22 transition-all">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button onclick="lbNav(-1)" class="absolute left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 border-none text-white flex items-center justify-center cursor-pointer hover:bg-white/22 transition-all">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <img id="lb-img" src="" alt="" class="max-w-[92vw] max-h-[88vh] rounded-lg object-contain"/>
+  <button onclick="lbNav(1)" class="absolute right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 border-none text-white flex items-center justify-center cursor-pointer hover:bg-white/22 transition-all">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div id="lb-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/50 text-xs"></div>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+var projects = [
+  {
+    id:1, num:"01", thumb:"from-[#dce4ff] to-[#c0cfff] dark:from-[#0d1d4a] dark:to-[#162566]",
+    tags:["Product Design","React","TypeScript"],
+    name:"Forma — Design System", short:"A comprehensive design system built for a fintech startup covering 80+ components with full accessibility support.",
+    year:"2024", role:"Lead Designer & Dev", client:"Fintech Startup", link:"",
+    heroPlaceholder:"F",
+    description:"Forma started as a side conversation about why the product felt inconsistent. Six months later it was a fully-documented design system used across three products and twelve engineers.\n\nThe system covers tokens, components, patterns, and a living Storybook that deploys on every PR. The goal was always to make the right thing the easy thing — so the default component is the accessible one, and the design and code stay in sync automatically.",
+    galleryPlaceholders:["Token architecture","Component library","Dark mode","Documentation site"]
+  },
+  {
+    id:2, num:"02", thumb:"from-[#d0e8ff] to-[#b8d4ff] dark:from-[#0a1e44] dark:to-[#112255]",
+    tags:["Branding","Web","Webflow"],
+    name:"Hutan — Brand Identity", short:"Full brand identity and marketing site for a sustainable packaging startup.",
+    year:"2024", role:"Brand Designer", client:"Hutan Packaging", link:"",
+    heroPlaceholder:"H",
+    description:"Hutan needed a brand that felt earthy without feeling dated, and premium without feeling cold. We landed on a wordmark based on a custom typeface with organic, slightly imperfect letterforms.\n\nThe marketing site was built in Webflow with a focus on storytelling and conversion. Page load performance was a priority: every image is served as WebP with responsive srcsets, scoring 98 on Lighthouse.",
+    galleryPlaceholders:["Brand mark","Colour palette","Packaging mockup","Website homepage","Business cards"]
+  },
+  {
+    id:3, num:"03", thumb:"from-[#d8daff] to-[#bdc0ff] dark:from-[#0e1c50] dark:to-[#141f66]",
+    tags:["Full-stack","Next.js","Postgres"],
+    name:"Catalog — Bookmark App", short:"A beautiful bookmarking tool with AI-powered auto-tagging. Built in a weekend, now 2,000+ users.",
+    year:"2023", role:"Solo Founder", client:"Side project", link:"",
+    heroPlaceholder:"C",
+    description:"Catalog grew out of frustration with every other bookmarking tool feeling like a database, not a reading list. The core idea: save anything, and the app figures out what it is.\n\nUnder the hood it uses a fine-tuned embedding model to auto-tag and cluster saved items. Built on Next.js App Router, Postgres on Neon, deployed on Vercel. Total monthly cost: under $12.",
+    galleryPlaceholders:["Dashboard view","Mobile app","Auto-tagging in action","Collections view"]
+  },
+  {
+    id:4, num:"04", thumb:"from-[#ccd9ff] to-[#a8bcff] dark:from-[#0b1840] dark:to-[#0e1e5a]",
+    tags:["Motion","Creative","WebGL"],
+    name:"Orbit — Interactive Exhibition", short:"An immersive web experience for a digital art exhibition exploring generative visuals and audio-reactive design.",
+    year:"2023", role:"Creative Developer", client:"Gallery Exhibition", link:"",
+    heroPlaceholder:"O",
+    description:"Orbit was commissioned for a three-month digital exhibition exploring the relationship between sound and space. Each visitor's experience is unique: visuals generated in real time using a WebGL particle system that responds to the ambient audio feed from the gallery.\n\nTechnically it's a Three.js scene with custom GLSL shaders, fed by the Web Audio API. Keeping 60fps on mid-range devices while particle count climbs into hundreds of thousands required creative frustum culling.",
+    galleryPlaceholders:["Opening screen","Particle system","Audio waveform","Colour mode"]
+  }
+];
+
+var posts = [
+  {id:1,title:"Why I stopped using Tailwind for everything",excerpt:"Tailwind is great — but I'd been reaching for it by default, even when plain CSS would be simpler. Here's what changed my mind.",date:{d:"14",m:"Mar",y:"2025"},rt:"5 min read",tags:["CSS","Tooling"],body:"<p>I've been using Tailwind CSS for three years on almost every project. It's fast to prototype with and the ecosystem is mature. But lately I've been questioning whether I'm using it out of habit rather than choice.</p><h2>The problem with defaults</h2><p>When a tool becomes your default, you stop asking whether it's the right fit. I noticed I was reaching for Tailwind even on small, mostly-static pages where the utility classes added more noise than they removed.</p><blockquote>\"The best tool is the one that's invisible. When I'm thinking about Tailwind classes more than the component's purpose, something's wrong.\"</blockquote><h2>What I do now</h2><p>I make a deliberate choice at the start of each project. For large React apps with many contributors? Tailwind still makes sense. For personal projects or marketing pages? Vanilla CSS with a single variables file and a handful of well-named classes.</p><h2>The takeaway</h2><p><code>npm install</code> is a decision, not a reflex. Every dependency has a cost — make sure it earns its place.</p><ul><li>Use the right tool for the job, not your favourite for every job.</li><li>Read your own code from a stranger's perspective sometimes.</li><li>Vanilla CSS has gotten really good. Give it a chance.</li></ul>"},
+  {id:2,title:"The quiet power of good defaults",excerpt:"The best design decisions are the ones users never notice. A meditation on defaults, restraint, and invisible craft.",date:{d:"28",m:"Feb",y:"2025"},rt:"4 min read",tags:["Design","Product"],body:"<p>There's a category of design work that never shows up in portfolios. It doesn't make for compelling case studies. Nobody tweets about it. But it's the work that separates good products from great ones: defaults.</p><h2>What I mean by defaults</h2><p>Every product decision you don't explicitly make is, in effect, made by default. The placeholder text in a form field. The notification frequency when someone signs up. The sorting order of a list.</p><blockquote>\"A bad default affects every user who doesn't change it — which is most of them.\"</blockquote><h2>A small exercise</h2><p>Take any product you work on. Create a fresh account. Don't change a single setting. Use it for ten minutes. That's your default experience. Is it good? Could it be better?</p>"},
+  {id:3,title:"Notes from six months of building in public",excerpt:"I've been sharing my work online consistently for half a year. Here's what I learned and whether it's been worth it.",date:{d:"10",m:"Feb",y:"2025"},rt:"7 min read",tags:["Career","Building in public"],body:"<p>Six months ago I decided to share more of my work online. Not polished pieces — the messy, in-progress stuff. Side projects, experiments, opinions I'd been keeping to myself.</p><h2>What actually happened</h2><p>The first three months: almost nothing. A few likes, a small handful of followers, the odd comment that kept me going. I nearly quit twice. Then something shifted. The pile of work started compounding. Someone hired me partly because they'd been following along. A project got 800 GitHub stars from a tweet I almost didn't send.</p><blockquote>\"The internet has a long memory and a short attention span. The long memory is your friend. Keep publishing.\"</blockquote>"},
+  {id:4,title:"Type as texture: lessons from editorial design",excerpt:"What web designers can learn from print — not just legibility, but how typography creates atmosphere.",date:{d:"22",m:"Jan",y:"2025"},rt:"6 min read",tags:["Typography","Design"],body:"<p>Before I was a web designer, I spent a year assisting at a small editorial studio that made books and catalogues. It changed how I think about type more than anything since.</p><h2>Type as texture</h2><p>In editorial design, typography isn't just about legibility — it's about feel. A page of dense, tightly-set serif type has a different emotional texture than the same words in a loose, airy sans-serif.</p><blockquote>\"A font choice is a voice choice. You're deciding how your text sounds before anyone reads a word.\"</blockquote><h2>On pairing</h2><p>The best font pairings aren't chosen by matching moods — they're chosen by contrast and function. A display face for headings should do something the body face doesn't. Give them each a job, then make sure they don't argue.</p>"}
+];
+
+/* ============================================================
+   RENDER WORK GRID
+============================================================ */
+function tag(t){ return '<span class="inline-block px-2 py-0.5 bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark rounded-full text-[.68rem] font-medium tracking-wide">'+t+'</span>'; }
+
+function renderWork(){
+  var html='';
+  for(var i=0;i<projects.length;i++){
+    var p=projects[i];
+    var tags=''; for(var j=0;j<p.tags.length;j++) tags+=tag(p.tags[j]);
+    var imgCount=(p.images&&p.images.length)?p.images.length:(p.galleryPlaceholders?p.galleryPlaceholders.length:0);
+    var badge=imgCount>0?'<div class="absolute bottom-2.5 right-2.5 flex items-center gap-1 bg-black/40 backdrop-blur-sm text-white text-[.68rem] font-medium px-2 py-0.5 rounded-full"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>'+imgCount+' images</div>':'';
+    var thumbImg=p.heroImg?'<img src="'+p.heroImg+'" alt="'+p.name+'" class="absolute inset-0 w-full h-full object-cover"/>':'<span class="font-serif text-[3.5rem] text-blue dark:text-blue-dark opacity-[.17] relative z-[1]">'+p.heroPlaceholder+'</span>';
+    html+='<div class="wc bg-white dark:bg-navy-700 border border-blue-500/10 dark:border-blue-dark/12 rounded-[14px] overflow-hidden cursor-pointer sr hover:shadow-[0_4px_28px_rgba(47,84,235,.12)] dark:hover:shadow-[0_4px_28px_rgba(0,0,0,.4)] hover:border-blue-500/30 dark:hover:border-blue-dark/30" data-pid="'+p.id+'" style="transition-delay:'+(0.04+i*.06)+'s">';
+    html+='<div class="relative h-[210px] overflow-hidden"><div class="thumb-inner w-full h-full bg-gradient-to-br '+p.thumb+' flex items-center justify-center">'+thumbImg+'</div>'+badge+'</div>';
+    html+='<div class="p-5"><div class="flex flex-wrap gap-1.5 mb-3">'+tags+'</div>';
+    html+='<div class="font-serif text-xl tracking-tight text-ink dark:text-slate-100 mb-2">'+p.name+'</div>';
+    html+='<p class="text-[.855rem] text-ink/55 dark:text-slate-400 leading-relaxed">'+p.short+'</p>';
+    html+='<div class="wcta flex items-center gap-1.5 mt-3.5 text-[.78rem] font-medium text-blue dark:text-blue-dark">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>';
+    html+='</div></div>';
+  }
+  document.getElementById('wgrid').innerHTML=html;
+  var cards=document.querySelectorAll('.wc');
+  for(var k=0;k<cards.length;k++){
+    cards[k].addEventListener('click',function(){ openProject(parseInt(this.getAttribute('data-pid'))); });
+  }
+}
+
+/* ============================================================
+   OPEN PROJECT
+============================================================ */
+var lbImages=[], lbIndex=0;
+
+function openProject(id){
+  var p=null; for(var i=0;i<projects.length;i++){if(projects[i].id===id){p=projects[i];break;}}
+  if(!p) return;
+  var tags=''; for(var j=0;j<p.tags.length;j++) tags+=tag(p.tags[j]);
+
+  var heroHtml='<div class="w-full aspect-video rounded-xl overflow-hidden my-10 bg-slate-100 dark:bg-navy-800 flex items-center justify-center">';
+  heroHtml+=p.heroImg?'<img src="'+p.heroImg+'" alt="'+p.name+'" class="w-full h-full object-cover"/>':'<span class="font-serif text-[5rem] text-blue dark:text-blue-dark opacity-[.12]">'+p.heroPlaceholder+'</span>';
+  heroHtml+='</div>';
+
+  var infoHtml='<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 p-5 bg-slate-100 dark:bg-navy-800 rounded-xl border border-blue-500/8 dark:border-blue-dark/12">';
+  infoHtml+='<div><div class="text-[.68rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-1">Year</div><div class="text-sm font-medium text-ink dark:text-slate-200">'+p.year+'</div></div>';
+  infoHtml+='<div><div class="text-[.68rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-1">Role</div><div class="text-sm font-medium text-ink dark:text-slate-200">'+p.role+'</div></div>';
+  infoHtml+='<div><div class="text-[.68rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-1">Client</div><div class="text-sm font-medium text-ink dark:text-slate-200">'+p.client+'</div></div>';
+  infoHtml+='<div><div class="text-[.68rem] tracking-[.09em] uppercase text-ink/40 dark:text-slate-600 font-medium mb-1">Stack</div><div class="text-sm font-medium text-ink dark:text-slate-200">'+p.tags.join(', ')+'</div></div>';
+  infoHtml+='</div>';
+
+  var parts=p.description.split('\n\n'), bodyHtml='<div class="space-y-4 mb-10">';
+  for(var d=0;d<parts.length;d++) if(parts[d].trim()) bodyHtml+='<p class="text-ink/60 dark:text-slate-400 leading-[1.82] text-[1rem]">'+parts[d]+'</p>';
+  bodyHtml+='</div>';
+
+  var imgs=p.images||[], phs=p.galleryPlaceholders||[], galleryHtml='';
+  if(imgs.length>0||phs.length>0){
+    lbImages=imgs.length>0?imgs:[];
+    galleryHtml='<h3 class="font-serif text-[1.5rem] tracking-tight text-ink dark:text-slate-100 mb-5">Project images</h3>';
+    galleryHtml+='<div class="grid grid-cols-2 sm:grid-cols-2 gap-3 mb-10">';
+    if(imgs.length>0){
+      for(var g=0;g<imgs.length;g++){
+        galleryHtml+='<div class="gallery-item relative rounded-xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-navy-800 cursor-pointer" data-gi="'+g+'">';
+        galleryHtml+='<img src="'+imgs[g]+'" alt="Image '+(g+1)+'" class="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.05]"/>';
+        galleryHtml+='<div class="cap absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent text-white text-[.72rem] p-2.5 pl-3">Click to enlarge</div>';
+        galleryHtml+='</div>';
+      }
+    } else {
+      for(var h=0;h<phs.length;h++){
+        galleryHtml+='<div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-navy-800 flex items-center justify-center">';
+        galleryHtml+='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32" class="text-blue dark:text-blue-dark opacity-20"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>';
+        galleryHtml+='<div class="absolute bottom-2.5 left-3 text-[.72rem] text-ink/40 dark:text-slate-600">'+phs[h]+'</div>';
+        galleryHtml+='</div>';
+      }
+    }
+    galleryHtml+='</div>';
+  }
+
+  var ctaHtml='<div class="flex flex-wrap gap-3 mt-2">';
+  if(p.link) ctaHtml+='<a href="'+p.link+'" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue dark:bg-blue-dark text-white text-sm font-medium rounded-full hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] transition-all"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Visit live site</a>';
+  ctaHtml+='<button onclick="closeProject()" class="inline-flex items-center gap-2 px-5 py-2.5 bg-transparent text-ink/55 dark:text-slate-400 text-sm font-medium rounded-full border border-blue-500/12 dark:border-blue-dark/15 hover:border-blue dark:hover:border-blue-dark hover:text-blue dark:hover:text-blue-dark hover:bg-blue-500/6 transition-all font-sans cursor-pointer">&#8592; Back to all work</button>';
+  ctaHtml+='</div>';
+
+  document.getElementById('prc').innerHTML=heroHtml+'<div class="flex flex-wrap gap-1.5 mb-3">'+tags+'</div><h1 class="font-serif text-[clamp(2rem,5vw,3.2rem)] tracking-[-0.025em] leading-[1.1] mb-8 text-ink dark:text-slate-100">'+p.name+'</h1>'+infoHtml+bodyHtml+galleryHtml+ctaHtml;
+  document.getElementById('prv-num').textContent=p.num+' / 0'+projects.length;
+
+  if(imgs.length>0){
+    var gi=document.querySelectorAll('.gallery-item[data-gi]');
+    for(var k=0;k<gi.length;k++) gi[k].addEventListener('click',function(){ openLb(parseInt(this.getAttribute('data-gi'))); });
+  }
+
+  var v=document.getElementById('prv');
+  v.classList.remove('hidden'); v.classList.add('animate-fade-in'); v.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+
+function closeProject(){
+  var v=document.getElementById('prv');
+  v.classList.add('hidden'); v.classList.remove('animate-fade-in');
+  document.body.style.overflow='';
+}
+
+/* ============================================================
+   LIGHTBOX
+============================================================ */
+function openLb(idx){
+  lbIndex=idx;
+  document.getElementById('lb-img').src=lbImages[lbIndex];
+  document.getElementById('lb-counter').textContent=(lbIndex+1)+' / '+lbImages.length;
+  var lb=document.getElementById('lb'); lb.classList.remove('hidden'); lb.classList.add('flex');
+}
+function closeLb(){ var lb=document.getElementById('lb'); lb.classList.add('hidden'); lb.classList.remove('flex'); }
+function lbNav(dir){
+  lbIndex=(lbIndex+dir+lbImages.length)%lbImages.length;
+  document.getElementById('lb-img').src=lbImages[lbIndex];
+  document.getElementById('lb-counter').textContent=(lbIndex+1)+' / '+lbImages.length;
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeLb();closeProject();closePost();}
+  if(e.key==='ArrowLeft') lbNav(-1);
+  if(e.key==='ArrowRight') lbNav(1);
+});
+
+/* ============================================================
+   BLOG
+============================================================ */
+function renderBlog(){
+  var html='';
+  for(var i=0;i<posts.length;i++){
+    var p=posts[i];
+    var tags=''; for(var j=0;j<p.tags.length;j++) tags+=tag(p.tags[j]);
+    html+='<a class="brow sr block grid grid-cols-[84px_1fr] sm:grid-cols-[84px_1fr] gap-7 py-7 border-b border-blue-500/10 dark:border-blue-dark/12 no-underline text-inherit cursor-pointer" href="#" data-pid="'+p.id+'" style="transition-delay:'+(0.05+i*.08)+'s">';
+    html+='<div class="text-[.72rem] text-ink/40 dark:text-slate-600 pt-0.5 leading-snug"><span class="block font-serif text-[1.7rem] font-normal text-ink dark:text-slate-200 opacity-20 leading-none mb-1">'+p.date.d+'</span>'+p.date.m+' '+p.date.y+'</div>';
+    html+='<div><div class="btt font-serif text-[1.2rem] tracking-tight leading-snug mb-1.5 transition-colors text-ink dark:text-slate-100">'+p.title+'</div>';
+    html+='<div class="text-[.855rem] text-ink/50 dark:text-slate-500 leading-relaxed line-clamp-2">'+p.excerpt+'</div>';
+    html+='<div class="flex items-center flex-wrap gap-2 mt-2.5">'+tags+'<span class="text-[.72rem] text-ink/40 dark:text-slate-600">'+p.rt+'</span></div>';
+    html+='</div></a>';
+  }
+  document.getElementById('blist').innerHTML=html;
+  var rows=document.querySelectorAll('#blist .brow');
+  for(var k=0;k<rows.length;k++){
+    rows[k].addEventListener('click',function(e){ e.preventDefault(); openPost(parseInt(this.getAttribute('data-pid'))); });
+  }
+  var first=document.querySelector('#blist .brow:first-child');
+  if(first) first.classList.add('border-t','border-blue-500/10','dark:border-blue-dark/12');
+}
+
+function openPost(id){
+  var p=null; for(var i=0;i<posts.length;i++){if(posts[i].id===id){p=posts[i];break;}}
+  if(!p) return;
+  var tags=''; for(var j=0;j<p.tags.length;j++) tags+=tag(p.tags[j]);
+
+  var styledBody=p.body
+    .replace(/<p>/g,'<p class="mb-6 leading-[1.82] text-[1.04rem] text-ink/60 dark:text-slate-400">')
+    .replace(/<h2>/g,'<h2 class="font-serif text-[1.65rem] tracking-tight mt-10 mb-4 text-ink dark:text-slate-100">')
+    .replace(/<blockquote>/g,'<blockquote class="border-l-[3px] border-blue dark:border-blue-dark pl-6 py-1 my-7 font-serif italic text-[1.18rem] text-ink/50 dark:text-slate-500">')
+    .replace(/<code>/g,'<code class="font-mono bg-blue-500/7 dark:bg-blue-dark/10 text-blue dark:text-blue-dark px-1.5 py-0.5 rounded text-[.875em]">')
+    .replace(/<ul>/g,'<ul class="list-disc pl-6 mb-6 space-y-1.5">')
+    .replace(/<li>/g,'<li class="text-ink/55 dark:text-slate-400 leading-relaxed">');
+
+  document.getElementById('pc').innerHTML=
+    '<div class="flex flex-wrap gap-1.5 mb-4">'+tags+'</div>'+
+    '<h1 class="font-serif text-[clamp(1.9rem,5vw,3rem)] tracking-[-0.025em] leading-[1.12] mb-4 text-ink dark:text-slate-100">'+p.title+'</h1>'+
+    '<div class="flex items-center flex-wrap gap-2 text-[.855rem] text-ink/40 dark:text-slate-600 mb-8"><span>Alex Maren</span><span class="opacity-30">&#183;</span><span>'+p.date.d+' '+p.date.m+' '+p.date.y+'</span><span class="opacity-30">&#183;</span><span>'+p.rt+'</span></div>'+
+    '<div class="h-px bg-blue-500/10 dark:bg-blue-dark/12 mb-8"></div>'+
+    '<div>'+styledBody+'</div>';
+
+  var v=document.getElementById('pv');
+  v.classList.remove('hidden'); v.classList.add('animate-fade-in'); v.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function closePost(){
+  var v=document.getElementById('pv'); v.classList.add('hidden'); v.classList.remove('animate-fade-in');
+  document.body.style.overflow='';
+}
+
+/* ============================================================
+   THEME
+============================================================ */
+function applyTheme(mode){
+  var isDark=(mode==='dark')||(mode==='system'&&window.matchMedia('(prefers-color-scheme:dark)').matches);
+  document.documentElement.classList.toggle('dark',isDark);
+}
+function setTheme(mode,btn){
+  var btns=document.querySelectorAll('.th-btn');
+  for(var i=0;i<btns.length;i++){
+    btns[i].classList.remove('on','bg-white','dark:bg-navy-700','text-blue','dark:text-blue-dark','shadow-sm');
+    btns[i].classList.add('text-ink/50','dark:text-slate-500');
+  }
+  btn.classList.add('on','bg-white','text-blue','shadow-sm');
+  btn.classList.remove('text-ink/50','dark:text-slate-500');
+  applyTheme(mode);
+  try{localStorage.setItem('theme',mode);}catch(e){}
+}
+(function(){
+  var s='light'; try{s=localStorage.getItem('theme')||'light';}catch(e){}
+  applyTheme(s);
+  var b=document.querySelector('.th-btn[data-m="'+s+'"]');
+  if(b){
+    var btns=document.querySelectorAll('.th-btn');
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.remove('on','bg-white','text-blue','shadow-sm');
+      btns[i].classList.add('text-ink/50');
+    }
+    b.classList.add('on','bg-white','text-blue','shadow-sm');
+    b.classList.remove('text-ink/50');
+  }
+})();
+
+/* ============================================================
+   NAV / MOBILE
+============================================================ */
+var mobOpen=false;
+function togMob(){ mobOpen=!mobOpen; var m=document.getElementById('mm'); m.classList.toggle('hidden',!mobOpen); m.classList.toggle('flex',mobOpen); }
+function closeMob(){ mobOpen=false; document.getElementById('mm').classList.add('hidden'); document.getElementById('mm').classList.remove('flex'); }
+function goHome(e){ e.preventDefault(); closeProject(); closePost(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+function initReveal(){
+  var els=document.querySelectorAll('.sr');
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++) els[i].classList.add('on');return;}
+  var io=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++) if(entries[i].isIntersecting){entries[i].target.classList.add('on');io.unobserve(entries[i].target);}
+  },{threshold:0.06,rootMargin:'0px 0px -20px 0px'});
+  for(var i=0;i<els.length;i++) io.observe(els[i]);
+}
+
+function initNav(){
+  var ids=['hero','about','work','blog','contact'];
+  var io=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++){
+      if(entries[i].isIntersecting){
+        var nls=document.querySelectorAll('.nl');
+        for(var j=0;j<nls.length;j++) nls[j].classList.remove('active','text-blue','dark:text-blue-dark','font-medium');
+        var lnk=document.querySelector('.nl[href="#'+entries[i].target.id+'"]');
+        if(lnk){lnk.classList.add('text-blue','font-medium'); lnk.classList.remove('text-ink/60','dark:text-slate-400');}
+      }
+    }
+  },{threshold:0.3});
+  for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el) io.observe(el);}
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderWork();
+renderBlog();
+initReveal();
+initNav();
+</script>
+</body>
+</html>
