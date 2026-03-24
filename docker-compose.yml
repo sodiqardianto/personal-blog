@@ -1,0 +1,21 @@
+services:
+  personal-blog:
+    container_name: personal-blog
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    networks:
+      - web-network
+
+networks:
+  web-network:
+    external: true
