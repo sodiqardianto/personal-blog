@@ -2,98 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
-import { MonitorIcon, MoonIcon, SunIcon } from "@/shared/ui";
-import type { NavItem, ThemeMode } from "@/features/portfolio/types";
+import { useEffect, useState } from "react";
+import { ThemeCycleButton } from "@/shared/ui";
+import type { NavItem } from "@/features/portfolio/types";
 import { cn } from "@/lib/utils";
 
 type HeaderProps = {
   navItems: NavItem[];
 };
 
-const THEME_STORAGE_KEY = "theme";
-const themeModes: ThemeMode[] = ["light", "system", "dark"];
-const themeCycleOrder: ThemeMode[] = ["dark", "light", "system"];
-const themeListeners = new Set<() => void>();
-
-const themeOptions: Record<
-  ThemeMode,
-  {
-    label: string;
-    icon: typeof SunIcon;
-  }
-> = {
-  light: { label: "Light", icon: SunIcon },
-  system: { label: "System", icon: MonitorIcon },
-  dark: { label: "Dark", icon: MoonIcon },
-};
-
-function isThemeMode(value: string | null): value is ThemeMode {
-  return value !== null && themeModes.includes(value as ThemeMode);
-}
-
-function subscribeToThemeStore(listener: () => void) {
-  themeListeners.add(listener);
-
-  return () => {
-    themeListeners.delete(listener);
-  };
-}
-
-function emitThemeStoreChange() {
-  themeListeners.forEach((listener) => listener());
-}
-
-function getThemeSnapshot(): ThemeMode {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  return isThemeMode(storedTheme) ? storedTheme : "light";
-}
-
-function getServerThemeSnapshot(): ThemeMode {
-  return "light";
-}
-
 export function Header({ navItems }: HeaderProps) {
   const pathname = usePathname();
-  const themeMode = useSyncExternalStore(
-    subscribeToThemeStore,
-    getThemeSnapshot,
-    getServerThemeSnapshot,
-  );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const applyTheme = () => {
-      const isDark =
-        themeMode === "dark" || (themeMode === "system" && mediaQuery.matches);
-      document.documentElement.classList.toggle("dark", isDark);
-    };
-
-    applyTheme();
-    mediaQuery.addEventListener("change", applyTheme);
-
-    return () => mediaQuery.removeEventListener("change", applyTheme);
-  }, [themeMode]);
-
-  const setThemeMode = (mode: ThemeMode) => {
-    window.localStorage.setItem(THEME_STORAGE_KEY, mode);
-    emitThemeStoreChange();
-  };
-
-  const cycleThemeMode = () => {
-    const currentIndex = themeCycleOrder.indexOf(themeMode);
-    const nextThemeMode =
-      themeCycleOrder[(currentIndex + 1) % themeCycleOrder.length] ?? "dark";
-
-    setThemeMode(nextThemeMode);
-  };
 
   useEffect(() => {
     const revealTargets = document.querySelectorAll<HTMLElement>(".sr");
@@ -169,13 +90,6 @@ export function Header({ navItems }: HeaderProps) {
     return () => window.removeEventListener("resize", closeMenuOnDesktop);
   }, []);
 
-  const currentTheme = themeOptions[themeMode];
-  const nextThemeMode =
-    themeCycleOrder[
-      (themeCycleOrder.indexOf(themeMode) + 1) % themeCycleOrder.length
-    ] ?? "dark";
-  const nextTheme = themeOptions[nextThemeMode];
-
   return (
     <>
       <nav
@@ -208,26 +122,7 @@ export function Header({ navItems }: HeaderProps) {
             ))}
           </div>
 
-          <button
-            type="button"
-            data-theme-mode={themeMode}
-            aria-label={`Cycle theme mode. Current ${currentTheme.label}, next ${nextTheme.label}.`}
-            onClick={cycleThemeMode}
-            title={`Current: ${currentTheme.label}. Click for ${nextTheme.label}.`}
-            className="theme-cycle-btn ml-3 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-blue/10 bg-white/85 text-ink/65 shadow-sm backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-blue/20 hover:bg-white dark:border-blue-dark/15 dark:bg-navy-800/88 dark:text-slate-300 dark:hover:border-blue-dark/30 dark:hover:bg-navy-700"
-          >
-            <span className="theme-cycle-orb" aria-hidden="true">
-              <span className="theme-glyph theme-glyph-light">
-                <SunIcon className="h-3.25 w-3.25 stroke-[2.2]" />
-              </span>
-              <span className="theme-glyph theme-glyph-system">
-                <MonitorIcon className="h-3.25 w-3.25 stroke-[2.2]" />
-              </span>
-              <span className="theme-glyph theme-glyph-dark">
-                <MoonIcon className="h-3.25 w-3.25 stroke-[2.2]" />
-              </span>
-            </span>
-          </button>
+          <ThemeCycleButton className="ml-3" />
 
           <button
             type="button"

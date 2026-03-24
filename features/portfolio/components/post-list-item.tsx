@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { Post } from "@/features/portfolio/types";
+import type { PostPreview } from "@/features/portfolio/types";
 
 type PostListItemProps = {
-  post: Post;
+  post: PostPreview;
 };
 
 export function PostListItem({ post }: PostListItemProps) {

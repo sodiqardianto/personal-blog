@@ -1,18 +1,15 @@
 import Link from "next/link";
 import { ArrowLeftIcon } from "@/shared/ui";
 import { PostBody } from "@/features/portfolio/components/post-body";
-import { PostEngagement } from "@/features/portfolio/components/post-engagement";
 import type { Post } from "@/features/portfolio/types";
 
 type PostDetailProps = {
-  author: string;
   post: Post;
   totalPosts: number;
   postIndex: number;
 };
 
 export function PostDetail({
-  author,
   post,
   totalPosts,
   postIndex,
@@ -51,7 +48,7 @@ export function PostDetail({
         </h1>
 
         <div className="mb-8 flex flex-wrap items-center gap-2 text-[0.855rem] text-ink/40 dark:text-slate-600">
-          <span>{author}</span>
+          <span>{post.authorName}</span>
           <span className="opacity-30">•</span>
           <span>
             {post.date.day} {post.date.month} {post.date.year}
@@ -65,7 +62,15 @@ export function PostDetail({
 
         <div className="mt-14 rounded-[1.35rem] border border-blue/10 bg-slate-100 px-6 py-6 dark:border-blue-dark/12 dark:bg-navy-800 sm:px-8 sm:py-7">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <PostEngagement slug={post.slug} />
+            <div className="max-w-[34rem]">
+              <p className="text-[1.02rem] font-medium text-ink dark:text-slate-100">
+                Enjoyed this note?
+              </p>
+              <p className="mt-2 text-[0.94rem] leading-7 text-ink/58 dark:text-slate-400">
+                There are more thoughts on software engineering, architecture,
+                and developer workflows in the archive.
+              </p>
+            </div>
 
             <Link
               href="/blog"

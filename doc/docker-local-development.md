@@ -1,9 +1,20 @@
 ---
 title: "Dockerizing My Local Development Environment"
-description: "How I standardized my Laravel and React development workflow using Docker, and why you should consider doing the same."
-pubDate: 2025-01-10
-category: "devops"
-draft: false
+slug: "docker-local-development"
+excerpt: "How I standardized my Laravel and React development workflow with Docker, reduced environment drift, and made project setup far more predictable."
+status: "published"
+published_at: "2025-01-10T00:00:00.000Z"
+seo_title: "Dockerizing My Local Development Environment | Sodiq Ardianto"
+seo_description: "Practical notes on using Docker for Laravel and React local development, with a focus on consistency, easier onboarding, and cleaner workflows."
+canonical_url: ""
+cover_image_url: ""
+cover_image_alt: ""
+og_image_url: ""
+meta_robots: "index,follow"
+author_name: "Sodiq Ardianto"
+is_featured: false
+locale: "en"
+tags: ["Docker", "DevOps", "Laravel", "Workflow"]
 ---
 
 # Dockerizing My Local Development Environment

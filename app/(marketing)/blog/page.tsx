@@ -10,8 +10,8 @@ export const metadata: Metadata = {
     "Thoughts and notes by Sodiq Ardianto on software engineering, backend architecture, TypeScript, and product development.",
 };
 
-export default function BlogPage() {
-  const posts = getPosts();
+export default async function BlogPage() {
+  const posts = await getPosts({ perPage: 50 });
 
   return (
     <main className="relative z-1 pt-15">

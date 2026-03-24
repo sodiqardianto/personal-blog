@@ -48,11 +48,12 @@ export type PostBlock =
   | { type: "list"; items: string[] }
   | { type: "codeBlock"; value: string; language?: string };
 
-export type Post = {
-  id: number;
+export type PostPreview = {
+  id: string;
   slug: string;
   title: string;
   excerpt: string;
+  authorName: string;
   date: {
     day: string;
     month: string;
@@ -60,6 +61,15 @@ export type Post = {
   };
   readingTime: string;
   tags: string[];
+  viewsCount: number;
+  likesCount: number;
+  sharesCount: number;
+};
+
+export type Post = PostPreview & {
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  canonicalUrl?: string | null;
   body: PostBlock[];
 };
 

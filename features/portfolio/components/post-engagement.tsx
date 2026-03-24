@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CopyIcon,
   EyeIcon,
@@ -14,38 +14,44 @@ import { cn } from "@/lib/utils";
 
 type PostEngagementProps = {
   slug: string;
+  initialViews: number;
+  initialShares: number;
+  initialLikes: number;
 };
 
-type PostEngagementState = {
-  views: number;
-  shares: number;
-  likes: number;
+type EngagementEntry = {
   liked: boolean;
   viewed: boolean;
   shared: boolean;
+  views: number;
+  shares: number;
+  likes: number;
 };
 
-type PostEngagementStore = Record<string, PostEngagementState>;
+type PostEngagementStore = Record<string, Partial<EngagementEntry>>;
 
 const POST_ENGAGEMENT_STORAGE_KEY = "portfolio-post-engagement";
 
-function defaultEngagementState(): PostEngagementState {
+function defaultEngagementEntry(): EngagementEntry {
   return {
-    views: 0,
-    shares: 0,
-    likes: 0,
     liked: false,
     viewed: false,
     shared: false,
+    views: 0,
+    shares: 0,
+    likes: 0,
   };
 }
 
-function normaliseEngagementState(
-  value?: Partial<PostEngagementState>,
-): PostEngagementState {
+function normaliseEngagementEntry(
+  value?: Partial<EngagementEntry>,
+): EngagementEntry {
   return {
-    ...defaultEngagementState(),
+    ...defaultEngagementEntry(),
     ...value,
+    views: typeof value?.views === "number" ? value.views : 0,
+    shares: typeof value?.shares === "number" ? value.shares : 0,
+    likes: typeof value?.likes === "number" ? value.likes : 0,
   };
 }
 
@@ -79,9 +85,18 @@ function writeEngagementStore(store: PostEngagementStore) {
   );
 }
 
-export function PostEngagement({ slug }: PostEngagementProps) {
-  const [engagement, setEngagement] = useState<PostEngagementState>(
-    defaultEngagementState(),
+export function PostEngagement({
+  slug,
+  initialViews,
+  initialShares,
+  initialLikes,
+}: PostEngagementProps) {
+  const [entry, setEntry] = useState<EngagementEntry>(() =>
+    normaliseEngagementEntry({
+      views: initialViews,
+      shares: initialShares,
+      likes: initialLikes,
+    }),
   );
   const [likeAnimating, setLikeAnimating] = useState(false);
   const [shareAnimating, setShareAnimating] = useState(false);
@@ -90,33 +105,56 @@ export function PostEngagement({ slug }: PostEngagementProps) {
   const [likeAnimationKey, setLikeAnimationKey] = useState(0);
   const shareMenuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const store = readEngagementStore();
-    const currentState = normaliseEngagementState(store[slug]);
+  const updateEntry = useCallback(
+    (updater: (currentState: EngagementEntry) => EngagementEntry) => {
+      const store = readEngagementStore();
+      const currentState = normaliseEngagementEntry({
+        views: initialViews,
+        shares: initialShares,
+        likes: initialLikes,
+        ...store[slug],
+      });
+      const nextState = updater(currentState);
 
-    if (!currentState.viewed) {
-      const nextState = {
-        ...currentState,
-        viewed: true,
-        views: currentState.views + 1,
-      };
-
-      // TODO: replace localStorage view tracking with backend/CMS analytics.
       writeEngagementStore({
         ...store,
         [slug]: nextState,
       });
+      setEntry(nextState);
+    },
+    [initialLikes, initialShares, initialViews, slug],
+  );
 
-      window.requestAnimationFrame(() => {
-        setEngagement(nextState);
-      });
-      return;
-    }
+  useEffect(() => {
+    const currentEntry = normaliseEngagementEntry({
+      views: initialViews,
+      shares: initialShares,
+      likes: initialLikes,
+      ...readEngagementStore()[slug],
+    });
 
     window.requestAnimationFrame(() => {
-      setEngagement(currentState);
+      setEntry(currentEntry);
     });
-  }, [slug]);
+
+    let frameId: number | undefined;
+
+    if (!currentEntry.viewed) {
+      frameId = window.requestAnimationFrame(() => {
+        updateEntry((currentState) => ({
+          ...currentState,
+          viewed: true,
+          views: currentState.views + 1,
+        }));
+      });
+    }
+
+    return () => {
+      if (frameId !== undefined) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, [initialLikes, initialShares, initialViews, slug, updateEntry]);
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
@@ -143,21 +181,11 @@ export function PostEngagement({ slug }: PostEngagementProps) {
     };
   }, []);
 
-  const updateEngagement = (
-    updater: (currentState: PostEngagementState) => PostEngagementState,
-  ) => {
-    const store = readEngagementStore();
-    const currentState = normaliseEngagementState(store[slug]);
-    const nextState = updater(currentState);
-
-    writeEngagementStore({
-      ...store,
-      [slug]: nextState,
-    });
-    setEngagement(nextState);
-  };
-
   const handleLike = () => {
+    if (entry.liked) {
+      return;
+    }
+
     setLikeAnimating(false);
     requestAnimationFrame(() => {
       setLikeAnimationKey((currentValue) => currentValue + 1);
@@ -168,38 +196,20 @@ export function PostEngagement({ slug }: PostEngagementProps) {
       setLikeAnimating(false);
     }, 420);
 
-    updateEngagement((currentState) => {
-      const nextLiked = !currentState.liked;
-
-      return {
-        ...currentState,
-        liked: nextLiked,
-        likes: Math.max(0, currentState.likes + (nextLiked ? 1 : -1)),
-      };
-    });
-
-    // TODO: replace localStorage like state with backend persistence per post.
+    updateEntry((currentState) => ({
+      ...currentState,
+      liked: true,
+      likes: currentState.likes + 1,
+    }));
   };
 
-  const trackShare = () => {
+  const playShareAnimation = () => {
     setShareAnimating(false);
     requestAnimationFrame(() => setShareAnimating(true));
 
     window.setTimeout(() => {
       setShareAnimating(false);
     }, 460);
-
-    updateEngagement((currentState) => {
-      if (currentState.shared) {
-        return currentState;
-      }
-
-      return {
-        ...currentState,
-        shared: true,
-        shares: currentState.shares + 1,
-      };
-    });
   };
 
   const showCopyToast = () => {
@@ -208,6 +218,19 @@ export function PostEngagement({ slug }: PostEngagementProps) {
     window.setTimeout(() => {
       setCopyToastVisible(false);
     }, 1800);
+  };
+
+  const trackShare = () => {
+    if (entry.shared) {
+      return;
+    }
+
+    playShareAnimation();
+    updateEntry((currentState) => ({
+      ...currentState,
+      shared: true,
+      shares: currentState.shares + 1,
+    }));
   };
 
   const handleShareAction = async (
@@ -247,15 +270,13 @@ export function PostEngagement({ slug }: PostEngagementProps) {
     } catch {
       // Ignore share cancellation and clipboard issues for now.
     }
-
-    // TODO: replace localStorage share tracking with backend event logging.
   };
 
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       <span className="inline-flex items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300">
         <EyeIcon className="h-4 w-4 stroke-2" />
-        {engagement.views} views
+        {entry.views} views
       </span>
 
       <div ref={shareMenuRef} className="relative">
@@ -284,7 +305,7 @@ export function PostEngagement({ slug }: PostEngagementProps) {
           >
             <ShareIcon className="h-4 w-4 stroke-2" />
           </span>
-          {engagement.shares} shares
+          {entry.shares} shares
         </button>
 
         {shareMenuOpen ? (
@@ -344,7 +365,7 @@ export function PostEngagement({ slug }: PostEngagementProps) {
         className={cn(
           "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 transition-all hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
           likeAnimating && "animate-engagement-like-btn",
-          engagement.liked &&
+          entry.liked &&
             "border-rose-200 text-rose-600 dark:border-rose-400/30 dark:text-rose-300",
         )}
       >
@@ -358,11 +379,11 @@ export function PostEngagement({ slug }: PostEngagementProps) {
           <HeartIcon
             className={cn(
               "h-4 w-4 stroke-2 transition-all duration-200",
-              engagement.liked && "fill-current text-rose-500 stroke-rose-500",
+              entry.liked && "fill-current text-rose-500 stroke-rose-500",
             )}
           />
         </span>
-        {engagement.likes} likes
+        {entry.likes} likes
       </button>
     </div>
   );

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { PageSection, SectionHeading } from "@/shared/ui";
 import { PostListItem } from "@/features/portfolio/components/post-list-item";
-import type { Post } from "@/features/portfolio/types";
+import type { PostPreview } from "@/features/portfolio/types";
 
 type BlogSectionProps = {
-  posts: Post[];
+  posts: PostPreview[];
 };
 
 export function BlogSection({ posts }: BlogSectionProps) {

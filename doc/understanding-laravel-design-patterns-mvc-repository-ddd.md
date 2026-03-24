@@ -1,11 +1,20 @@
 ---
 title: "Understanding Design Patterns in Laravel: From MVC and Repository to DDD"
-description: "A guide to understanding architectural evolution and design patterns in Laravel. When to use standard MVC, implement the Repository Pattern, or switch to Domain-Driven Design (DDD)."
-pubDate: 2026-03-04
-category: "backend"
-draft: false
-image: "../../assets/blog/laravel-pattern-ddd-repository.png"
-imageAlt: "Laravel Design Patterns"
+slug: "understanding-laravel-design-patterns-mvc-repository-ddd"
+excerpt: "A practical guide to Laravel architecture, from standard MVC to the Repository Pattern and Domain-Driven Design, with a focus on when each approach actually makes sense."
+status: "published"
+published_at: "2026-03-04T00:00:00.000Z"
+seo_title: "Understanding Design Patterns in Laravel: From MVC and Repository to DDD | Sodiq Ardianto"
+seo_description: "A practical look at Laravel architecture patterns, including MVC, the Repository Pattern, and DDD, with guidance on when each one is worth using."
+canonical_url: ""
+cover_image_url: ""
+cover_image_alt: ""
+og_image_url: ""
+meta_robots: "index,follow"
+author_name: "Sodiq Ardianto"
+is_featured: false
+locale: "en"
+tags: ["Laravel", "Architecture", "Repository Pattern", "DDD"]
 ---
 
 # Understanding Design Patterns in Laravel: From MVC and Repository to DDD

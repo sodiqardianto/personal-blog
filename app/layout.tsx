@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -41,7 +42,9 @@ export default function RootLayout({
       className={`${dmSans.variable} ${instrumentSerif.variable} scroll-smooth`}
     >
       <body className="grid-bg bg-slate-50 font-sans text-ink transition-colors duration-300 dark:bg-navy-900 dark:text-slate-200">
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
         {children}
       </body>
     </html>

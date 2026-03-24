@@ -11,8 +11,8 @@ import {
   stackItems,
 } from "@/features/portfolio";
 
-export default function Home() {
-  const posts = getPosts();
+export default async function Home() {
+  const posts = await getPosts({ perPage: 3 });
 
   return (
     <main className="relative z-1 pt-15">
