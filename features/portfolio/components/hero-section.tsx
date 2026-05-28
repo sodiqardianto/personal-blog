@@ -27,7 +27,15 @@ export function HeroSection() {
         both users and teams.
       </p>
 
-      <div className="relative z-1 flex flex-wrap gap-3 opacity-0 animate-fade-up-d4">
+      <div className="relative z-1 mb-10 flex flex-wrap gap-x-6 gap-y-2 text-[0.85rem] font-medium text-ink/50 opacity-0 animate-fade-up-d4 dark:text-slate-400">
+        <span>5+ Years of experience</span>
+        <span className="text-blue/30 dark:text-blue-dark/30">·</span>
+        <span>12+ Projects shipped</span>
+        <span className="text-blue/30 dark:text-blue-dark/30">·</span>
+        <span>7+ Clients</span>
+      </div>
+
+      <div className="relative z-1 flex flex-wrap gap-3 opacity-0 animate-fade-up-d5">
         <a
           href="#work"
           className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] dark:bg-blue-dark"
@@ -43,7 +51,7 @@ export function HeroSection() {
         </a>
       </div>
 
-      <div className="relative z-1 mt-14 flex items-center gap-2 text-[0.78rem] text-ink/40 opacity-0 animate-fade-up-d6 dark:text-slate-600">
+      <div className="relative z-1 mt-14 flex items-center gap-2 text-[0.78rem] text-ink/40 opacity-0 animate-fade-up-d7 dark:text-slate-600">
         <div className="relative flex h-8 w-5 justify-center rounded-full border border-blue/20 dark:border-blue-dark/20">
           <span className="absolute top-1.25 h-1.5 w-0.75 rounded-full bg-blue animate-bounce-dot dark:bg-blue-dark" />
         </div>
