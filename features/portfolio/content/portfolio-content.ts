@@ -47,6 +47,7 @@ export const projects: Project[] = [
     slug: "document-management-system-ypii",
     accent: "indigo",
     tags: ["Laravel 12", "React", "Inertia.js", "TypeScript"],
+    featured: true,
     title: "Document Management System — YPII",
     summary:
       "A document management platform built for YPII to centralise archival workflows, multi-level approvals, access control, and reporting across several document modules.",
@@ -104,6 +105,7 @@ export const projects: Project[] = [
     slug: "procurement-and-inventory-system-ypii",
     accent: "sky",
     tags: ["Laravel 11", "Blade", "Tailwind CSS", "MySQL"],
+    featured: true,
     title: "Procurement & Inventory System — YPII",
     summary:
       "A web-based internal system for handling procurement requests, procurement tracking, inventory records, disposal workflows, and operational audit logs in one place.",
@@ -154,6 +156,7 @@ export const projects: Project[] = [
     slug: "sip-universitas-paramadina",
     accent: "blue",
     tags: ["Next.js", "Laravel", "TypeScript", "Tailwind CSS", "Next Auth", "MySQL"],
+    featured: true,
     title: "System Information Paramadina — Universitas Paramadina",
     summary:
       "A web application for managing student academic and financial data at Universitas Paramadina, featuring payment tracking, re-registration workflows, and role-based access for staff and students.",
@@ -189,6 +192,7 @@ export const projects: Project[] = [
     slug: "movieman",
     accent: "violet",
     tags: ["React", "Redux Toolkit", "React Router", "Tailwind CSS", "Vite"],
+    featured: true,
     title: "Movieman — Movie & TV Discovery",
     summary:
       "A movie and TV show discovery app that lets users explore trending, popular, and top-rated content with search, infinite scroll, and detailed information pages.",

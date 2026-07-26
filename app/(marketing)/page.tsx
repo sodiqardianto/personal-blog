@@ -13,12 +13,13 @@ import {
 
 export default async function Home() {
   const posts = await getPosts({ perPage: 3 });
+  const featuredProjects = projects.filter((p) => p.featured);
 
   return (
     <main className="relative z-1 pt-15">
       <HeroSection />
       <AboutSection stackItems={stackItems} currentFocus={currentFocus} />
-      <ProjectsSection projects={projects} />
+      <ProjectsSection projects={featuredProjects} />
       <BlogSection posts={posts} />
       <ContactSection contactLinks={contactLinks} />
     </main>
