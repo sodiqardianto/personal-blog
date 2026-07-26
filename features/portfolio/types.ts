@@ -26,6 +26,7 @@ export type Project = {
   role: string;
   client: string;
   liveUrl?: string;
+  featured?: boolean;
   hero: {
     placeholder: string;
     imageSrc?: string;
