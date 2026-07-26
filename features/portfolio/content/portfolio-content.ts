@@ -47,13 +47,13 @@ export const projects: Project[] = [
     slug: "document-management-system-ypii",
     accent: "indigo",
     tags: ["Laravel 12", "React", "Inertia.js", "TypeScript"],
-    featured: true,
     title: "Document Management System — YPII",
     summary:
       "A document management platform built for YPII to centralise archival workflows, multi-level approvals, access control, and reporting across several document modules.",
     year: "2025",
     role: "Full-stack Engineer",
     client: "YPII",
+    featured: true,
     hero: {
       placeholder: "D",
       imageSrc: "/images/projects/document-management-system/dashboard.png",
@@ -105,13 +105,13 @@ export const projects: Project[] = [
     slug: "procurement-and-inventory-system-ypii",
     accent: "sky",
     tags: ["Laravel 11", "Blade", "Tailwind CSS", "MySQL"],
-    featured: true,
     title: "Procurement & Inventory System — YPII",
     summary:
       "A web-based internal system for handling procurement requests, procurement tracking, inventory records, disposal workflows, and operational audit logs in one place.",
     year: "2025",
     role: "Full-stack Engineer",
     client: "YPII",
+    featured: true,
     hero: {
       placeholder: "P",
       imageSrc: "/images/projects/procurement-inventory/dashboard.png",
@@ -156,13 +156,13 @@ export const projects: Project[] = [
     slug: "sip-universitas-paramadina",
     accent: "blue",
     tags: ["Next.js", "Laravel", "TypeScript", "Tailwind CSS", "Next Auth", "MySQL"],
-    featured: true,
     title: "System Information Paramadina — Universitas Paramadina",
     summary:
       "A web application for managing student academic and financial data at Universitas Paramadina, featuring payment tracking, re-registration workflows, and role-based access for staff and students.",
     year: "2024",
     role: "Full-stack Engineer",
     client: "Universitas Paramadina",
+    featured: true,
     hero: {
       placeholder: "S",
       imageSrc: "/images/projects/sip-universitas-paramadina/referensi-akademik.jpg",
@@ -192,7 +192,6 @@ export const projects: Project[] = [
     slug: "movieman",
     accent: "violet",
     tags: ["React", "Redux Toolkit", "React Router", "Tailwind CSS", "Vite"],
-    featured: true,
     title: "Movieman — Movie & TV Discovery",
     summary:
       "A movie and TV show discovery app that lets users explore trending, popular, and top-rated content with search, infinite scroll, and detailed information pages.",
@@ -200,6 +199,7 @@ export const projects: Project[] = [
     role: "Frontend Engineer",
     client: "Personal Project",
     liveUrl: "https://movieman-git-main-sodiqardiantos-projects.vercel.app/",
+    featured: true,
     hero: {
       placeholder: "M",
       imageSrc: "/images/projects/movieman/explore-movies.png",
@@ -245,6 +245,7 @@ export const projects: Project[] = [
     year: "2024",
     role: "Self-paced Learner",
     client: "Online Course",
+    featured: false,
     hero: {
       placeholder: "F",
       imageSrc: "/images/projects/fullstack-laravel-vuejs-course/shayna-ecommerce.jpg",
@@ -280,6 +281,7 @@ export const projects: Project[] = [
     year: "2023",
     role: "Full-stack Engineer",
     client: "PT. Petra Sejahtera Abadi",
+    featured: false,
     hero: {
       placeholder: "E",
       imageSrc: "/images/projects/easyform-list-form.jpg",
@@ -315,6 +317,7 @@ export const projects: Project[] = [
     year: "2023",
     role: "Full-stack Engineer",
     client: "PT. Petra Sejahtera Abadi",
+    featured: false,
     hero: {
       placeholder: "H",
       imageSrc: "/images/projects/hr-recruitment-dashboard.jpg",

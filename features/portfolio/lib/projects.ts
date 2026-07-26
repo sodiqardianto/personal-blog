@@ -10,3 +10,7 @@ export const getProjectSlugs = cache(() =>
 export const getProjectBySlug = cache((slug: string) =>
   getProjects().find((project) => project.slug === slug) ?? null,
 );
+
+export const getFeaturedProjects = cache(() =>
+  getProjects().filter((project) => project.featured),
+);

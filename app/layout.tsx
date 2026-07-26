@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Serif } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-inter",
 });
 
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-space-grotesk",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +28,7 @@ const themeInitScript = `
   try {
     var storedTheme = localStorage.getItem("theme");
     var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var shouldUseDark = storedTheme === "dark" || (storedTheme === "system" && prefersDark);
+    var shouldUseDark = storedTheme === "dark" || ((storedTheme === "system" || !storedTheme) && prefersDark);
     document.documentElement.classList.toggle("dark", shouldUseDark);
   } catch (_) {}
 `;
@@ -39,9 +42,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${instrumentSerif.variable} scroll-smooth`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable} scroll-smooth`}
     >
-      <body className="grid-bg bg-slate-50 font-sans text-ink transition-colors duration-300 dark:bg-navy-900 dark:text-slate-200">
+      <body className="bg-paper font-sans text-ink antialiased transition-colors duration-300">
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>

@@ -10,7 +10,11 @@ export default function MarketingLayout({
     <>
       <Header navItems={navItems} />
       {children}
-      <Footer author={siteMetadata.author} location={siteMetadata.location} />
+      <Footer
+        author={siteMetadata.author}
+        location={siteMetadata.location}
+        cvHref={siteMetadata.cvHref}
+      />
     </>
   );
 }

@@ -16,13 +16,13 @@ export function ProjectDetail({ project, totalProjects }: ProjectDetailProps) {
       <div className="project-detail-header sticky top-0 z-1010 flex h-15 items-center justify-between border-b border-blue/10 bg-slate-50/90 px-[clamp(1.25rem,5vw,3.5rem)] backdrop-blur-lg dark:border-blue-dark/12 dark:bg-navy-900/92">
         <Link
           href="/#work"
-          className="inline-flex cursor-pointer items-center gap-2 bg-transparent text-sm text-ink/50 transition-colors hover:text-blue dark:text-slate-500 dark:hover:text-blue-dark"
+          className="inline-flex cursor-pointer items-center gap-2 bg-transparent text-sm text-soft transition-colors hover:text-accent"
         >
           <ArrowLeftIcon className="h-4 w-4 stroke-[2.2]" />
           Back to work
         </Link>
 
-        <span className="text-xs text-ink/40 dark:text-slate-600">
+        <span className="text-xs text-soft">
           {project.number} / {String(totalProjects).padStart(2, "0")}
         </span>
       </div>

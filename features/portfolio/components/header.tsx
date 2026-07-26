@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemeCycleButton } from "@/shared/ui";
+import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/shared/ui";
 import type { NavItem } from "@/features/portfolio/types";
 import { cn } from "@/lib/utils";
 
@@ -11,10 +11,51 @@ type HeaderProps = {
   navItems: NavItem[];
 };
 
+function getSectionFromPathname(pathname: string) {
+  if (pathname.startsWith("/blog")) return "blog";
+  if (pathname.startsWith("/projects")) return "work";
+
+  return null;
+}
+
 export function Header({ navItems }: HeaderProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("hero");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(() =>
+    getSectionFromPathname(pathname),
+  );
+
+  useEffect(() => {
+    const syncActiveSection = () => {
+      const hashSection = window.location.hash.slice(1);
+      const hasMatchingHash = navItems.some(
+        (item) => item.sectionId === hashSection,
+      );
+
+      setActiveSection(
+        pathname === "/" && hasMatchingHash
+          ? hashSection
+          : getSectionFromPathname(pathname),
+      );
+    };
+
+    syncActiveSection();
+    window.addEventListener("hashchange", syncActiveSection);
+
+    return () => window.removeEventListener("hashchange", syncActiveSection);
+  }, [navItems, pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    const frameId = requestAnimationFrame(onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const revealTargets = document.querySelectorAll<HTMLElement>(".sr");
@@ -24,160 +65,141 @@ export function Header({ navItems }: HeaderProps) {
       return;
     }
 
-    const revealObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("on");
-            revealObserver.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       },
-      {
-        threshold: 0.06,
-        rootMargin: "0px 0px -20px 0px",
-      },
+      { threshold: 0.15 },
     );
 
-    revealTargets.forEach((element) => revealObserver.observe(element));
-
-    return () => revealObserver.disconnect();
+    revealTargets.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, [pathname]);
 
   useEffect(() => {
-    const sectionIds = ["hero", ...navItems.map((item) => item.sectionId)];
-    const sections = sectionIds
-      .map((sectionId) => document.getElementById(sectionId))
-      .filter((element): element is HTMLElement => element !== null);
-
-    if (sections.length === 0) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (entryA, entryB) =>
-              entryB.intersectionRatio - entryA.intersectionRatio,
-          )[0];
-
-        if (visibleEntry) {
-          setActiveSection(visibleEntry.target.id);
-        }
-      },
-      {
-        threshold: [0.2, 0.4, 0.65],
-        rootMargin: "-88px 0px -45% 0px",
-      },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, [navItems, pathname]);
-
-  useEffect(() => {
     const closeMenuOnDesktop = () => {
-      if (window.innerWidth >= 768) {
-        setMobileOpen(false);
-      }
+      if (window.innerWidth >= 768) setMobileOpen(false);
     };
 
     window.addEventListener("resize", closeMenuOnDesktop);
-
     return () => window.removeEventListener("resize", closeMenuOnDesktop);
   }, []);
 
+  const sectionHref = (item: NavItem) =>
+    pathname === "/" ? item.href : `/${item.href}`;
+
+  const toggleTheme = () => {
+    const nextIsDark = !document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", nextIsDark);
+    localStorage.setItem("theme", nextIsDark ? "dark" : "light");
+  };
+
   return (
-    <>
-      <nav
-        id="site-header"
-        className="fixed top-0 left-0 right-0 z-200 flex h-15 items-center justify-between border-b border-blue/10 bg-slate-50/85 px-[clamp(1.25rem,5vw,3.5rem)] backdrop-blur-lg transition-colors duration-300 dark:border-blue-dark/10 dark:bg-navy-900/90"
-      >
+    <header
+      id="site-header"
+      className={cn(
+        "site-header fixed inset-x-0 top-0 z-50 border-b border-transparent",
+        isScrolled && "scrolled",
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
         <Link
-          href="/"
-          className="font-serif text-[1.15rem] tracking-tight text-ink no-underline dark:text-slate-200"
+          href={pathname === "/" ? "#top" : "/#top"}
           onClick={() => setMobileOpen(false)}
+          className="font-display text-lg font-semibold tracking-tight"
         >
-          Sodiq<span className="text-blue dark:text-blue-dark">.</span>
+          sodiqardianto
         </Link>
 
-        <div className="flex items-center gap-1">
-          <div className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-8 font-mono text-sm md:flex"
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.sectionId;
+
+            return (
               <Link
                 key={item.sectionId}
-                href={pathname === "/" ? item.href : `/${item.href}`}
-                className={cn(
-                  "nl block rounded-lg px-3 py-1.5 text-sm text-ink/60 transition-all hover:bg-blue/6 hover:text-ink dark:text-slate-400 dark:hover:text-slate-200",
-                  pathname === "/" &&
-                    activeSection === item.sectionId &&
-                    "font-medium text-blue dark:text-blue-dark",
-                )}
+                href={sectionHref(item)}
+                aria-current={isActive ? "location" : undefined}
+                className={cn("nav-link lowercase", isActive && "active")}
+                onClick={() => setActiveSection(item.sectionId)}
               >
                 {item.label}
               </Link>
-            ))}
-          </div>
+            );
+          })}
+        </nav>
 
-          <ThemeCycleButton className="ml-3" />
-
+        <div className="flex items-center gap-3">
+          <Link
+            href={pathname === "/" ? "#contact" : "/#contact"}
+            className="button-primary hidden rounded-full px-4 py-2 font-mono text-sm sm:inline-flex"
+          >
+            say hi
+          </Link>
           <button
             type="button"
+            onClick={toggleTheme}
+            className="theme-toggle flex items-center justify-center"
+            aria-label="Toggle color theme"
+          >
+            <SunIcon className="h-4 w-4 stroke-2 dark:hidden" />
+            <MoonIcon className="hidden h-4 w-4 stroke-2 dark:block" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            className="hidden theme-toggle items-center justify-center max-md:flex"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((currentValue) => !currentValue)}
-            className="ml-2 flex cursor-pointer flex-col gap-1.25 bg-transparent p-1 md:hidden"
           >
-            <span
-              className={cn(
-                "block h-0.5 w-5.5 rounded-sm bg-ink transition-all dark:bg-slate-200",
-                mobileOpen && "translate-y-1.75 rotate-45",
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-5.5 rounded-sm bg-ink transition-all dark:bg-slate-200",
-                mobileOpen && "opacity-0",
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-5.5 rounded-sm bg-ink transition-all dark:bg-slate-200",
-                mobileOpen && "-translate-y-1.75 -rotate-45",
-              )}
-            />
+            {mobileOpen ? (
+              <CloseIcon className="h-4 w-4 stroke-2" />
+            ) : (
+              <MenuIcon className="h-4 w-4 stroke-2" />
+            )}
           </button>
         </div>
-      </nav>
+      </div>
 
       <div
         id="site-mobile-menu"
         className={cn(
-          "fixed top-15 left-0 right-0 z-199 flex-col gap-0.5 border-b border-blue/10 bg-slate-50/90 px-[clamp(1.25rem,5vw,3.5rem)] py-3 backdrop-blur-lg dark:border-blue-dark/10 dark:bg-navy-900/94",
-          mobileOpen ? "flex animate-slide-down md:hidden" : "hidden md:hidden",
+          "border-t border-line bg-paper px-6 py-4 md:hidden",
+          mobileOpen ? "block animate-slide-down" : "hidden",
         )}
       >
-        <nav className="flex flex-col gap-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.sectionId}
-              href={pathname === "/" ? item.href : `/${item.href}`}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "rounded-lg px-2 py-2.5 text-[0.95rem] text-ink/60 transition-all hover:bg-blue/6 hover:text-ink dark:text-slate-400 dark:hover:text-slate-200",
-                pathname === "/" &&
-                  activeSection === item.sectionId &&
-                  "font-medium text-blue dark:text-blue-dark",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav
+          aria-label="Mobile navigation"
+          className="flex flex-col gap-4 font-mono text-sm"
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.sectionId;
+
+            return (
+              <Link
+                key={item.sectionId}
+                href={sectionHref(item)}
+                aria-current={isActive ? "location" : undefined}
+                className={cn("nav-link w-fit lowercase", isActive && "active")}
+                onClick={() => {
+                  setActiveSection(item.sectionId);
+                  setMobileOpen(false);
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
-    </>
+    </header>
   );
 }

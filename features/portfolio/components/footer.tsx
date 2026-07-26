@@ -1,19 +1,17 @@
 type FooterProps = {
   author: string;
   location: string;
+  cvHref: string;
 };
 
-export function Footer({ author, location }: FooterProps) {
+export function Footer({ author, location, cvHref }: FooterProps) {
   return (
-    <footer className="relative z-1 flex flex-wrap items-center justify-between gap-3 border-t border-blue/10 px-[clamp(1.25rem,5vw,3.5rem)] py-7 text-[0.78rem] text-ink/40 dark:border-blue-dark/12 dark:text-slate-600">
-      <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="border-t border-line py-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 font-mono text-xs text-soft sm:flex-row md:px-8">
         <span>© 2025 {author}. Made with care.</span>
         <span>
           {location} ·{" "}
-          <a
-            href="#"
-            className="transition-colors hover:text-blue dark:hover:text-blue-dark"
-          >
+          <a href={cvHref} className="transition-colors hover:text-accent">
             Download CV
           </a>
         </span>
