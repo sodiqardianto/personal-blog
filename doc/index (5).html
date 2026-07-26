@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sodiq Ardianto — Software Engineer</title>
+<meta name="description" content="Portfolio, projects, and notes from Sodiq Ardianto — a software engineer building with Laravel, Next.js, Express, and Flutter.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tailwindcss-cdn@3.4.10/tailwindcss.min.js"></script>
+<script>
+  // fallback to official play cdn if the mirror above fails
+  if (!window.tailwind) {
+    document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+  }
+</script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          paper:   'var(--paper)',
+          surface: 'var(--surface)',
+          ink:     'var(--ink)',
+          soft:    'var(--soft)',
+          line:    'var(--line)',
+          accent:  'var(--accent)',
+          accent2: 'var(--accent2)',
+          amber:   'var(--amber)',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --surface:#FFFFFF;
+    --ink:#15181C;
+    --soft:#5B6169;
+    --line:#E7E5DF;
+    --accent:#4338CA;
+    --accent2:#16A34A;
+    --amber:#F5A623;
+  }
+  html.dark{
+    --paper:#111318;
+    --surface:#171A20;
+    --ink:#F2F1EC;
+    --soft:#9BA0A8;
+    --line:#272B32;
+    --accent:#8B84FF;
+    --accent2:#4ADE80;
+    --amber:#FBBF24;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink); transition:background .3s ease, color .3s ease;}
+
+  ::selection{ background: var(--accent); color: #fff; }
+
+  /* ---- ambient grid backdrop ---- */
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    opacity:.5;
+  }
+
+  /* ---- eyebrow / comment labels ---- */
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.8rem;
+    color: var(--accent2);
+    letter-spacing:.02em;
+  }
+  .eyebrow::before{ content:"// "; color: var(--soft); }
+
+  /* ---- terminal card ---- */
+  .term{
+    background: var(--surface);
+    border:1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.03), 0 20px 45px -25px rgba(20,23,26,.35);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; border-bottom:1px solid var(--line);
+  }
+  .term-dot{ width:10px; height:10px; border-radius:999px; }
+
+  .tok-key{ color: var(--accent); }
+  .tok-str{ color: var(--accent2); }
+  .tok-com{ color: var(--soft); }
+  .tok-fn{ color: var(--amber); }
+
+  .cursor{
+    display:inline-block; width:8px; height:1.05em; background:var(--accent);
+    margin-left:3px; vertical-align:-2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---- nav ---- */
+  #nav{
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    border-bottom:1px solid transparent;
+    transition: border-color .3s ease, box-shadow .3s ease;
+  }
+  #nav.scrolled{ border-color: var(--line); box-shadow:0 8px 24px -20px rgba(0,0,0,.4); }
+
+  .navlink{ position:relative; color:var(--soft); }
+  .navlink::after{
+    content:""; position:absolute; left:0; bottom:-4px; width:0; height:1px;
+    background:var(--accent); transition:width .25s ease;
+  }
+  .navlink:hover{ color:var(--ink); }
+  .navlink:hover::after{ width:100%; }
+
+  /* ---- reveal on scroll ---- */
+  .reveal{ opacity:0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---- cards ---- */
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .card:hover{
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 24px 48px -28px rgba(20,23,26,.35);
+  }
+
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:.72rem;
+    border:1px solid var(--line); color:var(--soft);
+    padding:2px 8px; border-radius:999px;
+  }
+
+  .thumb{
+    position:relative; overflow:hidden; border-radius:12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+  }
+  .thumb::before{
+    content:""; position:absolute; inset:0;
+    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.12) 0 2px, transparent 2px 14px);
+  }
+  .thumb-mark{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; color:rgba(255,255,255,.92);
+  }
+
+  .btn-primary{
+    background:var(--ink); color:var(--paper);
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); opacity:.9; }
+
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--ink);
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .btn-ghost:hover{ border-color: var(--accent); transform: translateY(-2px); }
+
+  .status-dot{ width:7px; height:7px; border-radius:999px; background:var(--accent2); }
+  .status-dot::after{
+    content:""; position:absolute; width:7px; height:7px; border-radius:999px;
+    background:var(--accent2); animation: pulse 1.8s ease-out infinite;
+  }
+  @keyframes pulse{ 0%{ opacity:.6; transform:scale(1);} 100%{ opacity:0; transform:scale(2.6);} }
+
+  .theme-toggle{
+    width:38px; height:38px; border-radius:999px; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .theme-toggle:hover{ border-color: var(--accent); transform: rotate(20deg); }
+
+  .notes-row{ border-bottom:1px solid var(--line); transition: background .25s ease, padding-left .25s ease; }
+  .notes-row:hover{ background: color-mix(in srgb, var(--accent) 6%, transparent); padding-left:8px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+
+<body class="font-body antialiased">
+
+<!-- ================= NAV ================= -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 md:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display font-semibold text-lg tracking-tight">
+      sodiq<span style="color:var(--accent)">()</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 font-mono text-sm">
+      <a href="#about" class="navlink">about</a>
+      <a href="#work" class="navlink">work</a>
+      <a href="#notes" class="navlink">notes</a>
+      <a href="#contact" class="navlink">contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="hidden sm:inline-flex btn-primary rounded-full px-4 py-2 text-sm font-mono">
+        say hi
+      </a>
+      <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">
+        <svg id="iconSun" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg id="iconMoon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <button id="menuBtn" class="md:hidden theme-toggle" aria-label="Menu">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden border-t" style="border-color:var(--line); background:var(--paper);">
+    <div class="px-6 py-4 flex flex-col gap-4 font-mono text-sm">
+      <a href="#about" class="navlink">about</a>
+      <a href="#work" class="navlink">work</a>
+      <a href="#notes" class="navlink">notes</a>
+      <a href="#contact" class="navlink">contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="top" class="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden">
+  <div class="grid-bg absolute inset-0 pointer-events-none"></div>
+
+  <div class="max-w-6xl mx-auto px-6 md:px-8 relative grid md:grid-cols-2 gap-14 items-center">
+    <div>
+      <div class="inline-flex items-center gap-2 relative mb-6">
+        <span class="status-dot relative"></span>
+        <span class="eyebrow">available for new projects</span>
+      </div>
+
+      <h1 class="font-display font-semibold text-[2.6rem] leading-[1.08] sm:text-5xl md:text-[3.4rem] tracking-tight">
+        I build software<br>
+        that stays <span style="color:var(--accent)">reliable</span><br>
+        as it grows.
+      </h1>
+
+      <p class="font-mono text-base md:text-lg mt-6" style="color:var(--soft)">
+        Hi, I'm Sodiq — a <span id="typed" style="color:var(--ink)">software engineer</span><span class="cursor"></span>
+      </p>
+
+      <p class="mt-6 max-w-md text-[15px] leading-relaxed" style="color:var(--soft)">
+        I work across backend, frontend, and mobile — Laravel, Express, React/Next.js, and Flutter.
+        My focus is clean architecture, maintainable code, and shipping products that actually hold up in production.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 mt-9">
+        <a href="#work" class="btn-primary rounded-full px-6 py-3 text-sm font-mono">view my work</a>
+        <a href="#contact" class="btn-ghost rounded-full px-6 py-3 text-sm font-mono">get in touch</a>
+      </div>
+
+      <div class="flex items-center gap-6 mt-12 font-mono text-sm" style="color:var(--soft)">
+        <span><b class="text-ink" style="color:var(--ink)">5+</b> years exp.</span>
+        <span class="w-1 h-1 rounded-full" style="background:var(--line)"></span>
+        <span><b style="color:var(--ink)">12+</b> projects shipped</span>
+      </div>
+    </div>
+
+    <!-- terminal signature card -->
+    <div class="term reveal" data-reveal>
+      <div class="term-bar">
+        <span class="term-dot" style="background:#FF5F57"></span>
+        <span class="term-dot" style="background:#FEBC2E"></span>
+        <span class="term-dot" style="background:#28C840"></span>
+        <span class="ml-2 font-mono text-xs" style="color:var(--soft)">about.ts</span>
+      </div>
+      <pre class="font-mono text-[13px] leading-6 p-5 overflow-x-auto"><span class="tok-com">// who's building this</span>
+<span class="tok-key">const</span> sodiq = {
+  role: <span class="tok-str">"Software Engineer"</span>,
+  base: <span class="tok-str">"Indonesia"</span>,
+  stack: [<span class="tok-str">"Laravel"</span>, <span class="tok-str">"Next.js"</span>, <span class="tok-str">"Flutter"</span>],
+  values: [<span class="tok-str">"clean architecture"</span>, <span class="tok-str">"clarity"</span>],
+  <span class="tok-fn">isOpenToWork</span>: <span class="tok-key">true</span>,
+};
+
+<span class="tok-fn">connect</span>(sodiq);</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-24 border-t" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-6 md:px-8 grid md:grid-cols-[1fr_1.3fr] gap-14">
+    <div class="reveal" data-reveal>
+      <p class="eyebrow mb-3">about</p>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight">A bit about me</h2>
+    </div>
+
+    <div class="reveal" data-reveal>
+      <p class="text-[15px] md:text-base leading-relaxed" style="color:var(--soft)">
+        I'm a software engineer from Indonesia working across the stack — backend, frontend, and mobile.
+        Most of my work sits on Laravel, Express, React and Next.js, with Flutter for mobile builds.
+        I like systems that are easy to reason about a year later, not just easy to ship today.
+      </p>
+      <p class="text-[15px] md:text-base leading-relaxed mt-4" style="color:var(--soft)">
+        This site is where I keep a running record of that work — case studies from real projects,
+        and shorter notes on patterns, tools, and decisions I've learned the hard way. Comfortable with
+        Linux, Docker, MySQL and PostgreSQL, and I pick tools based on what a product actually needs.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
+        <div class="card p-4 text-center">
+          <p class="font-mono text-xs" style="color:var(--soft)">backend</p>
+          <p class="font-display font-semibold text-sm mt-1">Laravel · Express</p>
+        </div>
+        <div class="card p-4 text-center">
+          <p class="font-mono text-xs" style="color:var(--soft)">frontend</p>
+          <p class="font-display font-semibold text-sm mt-1">React · Next.js</p>
+        </div>
+        <div class="card p-4 text-center">
+          <p class="font-mono text-xs" style="color:var(--soft)">mobile</p>
+          <p class="font-display font-semibold text-sm mt-1">Flutter</p>
+        </div>
+        <div class="card p-4 text-center">
+          <p class="font-mono text-xs" style="color:var(--soft)">infra</p>
+          <p class="font-display font-semibold text-sm mt-1">Docker · SQL</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work" class="py-24 border-t" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-6 md:px-8">
+    <div class="flex items-end justify-between mb-12 reveal" data-reveal>
+      <div>
+        <p class="eyebrow mb-3">work</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight">Selected projects</h2>
+      </div>
+      <a href="#" class="hidden sm:inline-block font-mono text-sm navlink">view all →</a>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- project 1 -->
+      <a href="#" class="card p-5 block reveal" data-reveal>
+        <div class="thumb h-40 flex items-center justify-center">
+          <span class="thumb-mark text-2xl">DMS</span>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="tag">Laravel 12</span><span class="tag">Inertia.js</span><span class="tag">TypeScript</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mt-3">Document Management System — YPII</h3>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--soft)">
+          Centralised archival workflows, multi-level approvals, access control, and reporting across several document modules.
+        </p>
+        <span class="font-mono text-xs mt-4 inline-block" style="color:var(--accent)">view case study →</span>
+      </a>
+
+      <!-- project 2 -->
+      <a href="#" class="card p-5 block reveal" data-reveal>
+        <div class="thumb h-40 flex items-center justify-center">
+          <span class="thumb-mark text-2xl">PIS</span>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="tag">Laravel 11</span><span class="tag">Blade</span><span class="tag">MySQL</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mt-3">Procurement & Inventory System — YPII</h3>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--soft)">
+          Internal system for procurement requests, tracking, inventory records, disposal workflows, and audit logs.
+        </p>
+        <span class="font-mono text-xs mt-4 inline-block" style="color:var(--accent)">view case study →</span>
+      </a>
+
+      <!-- project 3 -->
+      <a href="#" class="card p-5 block reveal" data-reveal>
+        <div class="thumb h-40 flex items-center justify-center">
+          <span class="thumb-mark text-2xl">SIP</span>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="tag">Next.js</span><span class="tag">Laravel</span><span class="tag">Next Auth</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mt-3">System Information — Universitas Paramadina</h3>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--soft)">
+          Academic and financial data management with payment tracking, re-registration flows, and role-based access.
+        </p>
+        <span class="font-mono text-xs mt-4 inline-block" style="color:var(--accent)">view case study →</span>
+      </a>
+
+      <!-- project 4 -->
+      <a href="#" class="card p-5 block reveal" data-reveal>
+        <div class="thumb h-40 flex items-center justify-center">
+          <span class="thumb-mark text-2xl">MOV</span>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="tag">React</span><span class="tag">Redux Toolkit</span><span class="tag">Vite</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mt-3">Movieman — Movie & TV Discovery</h3>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--soft)">
+          Discover trending, popular, and top-rated titles with search, infinite scroll, and detail pages.
+        </p>
+        <span class="font-mono text-xs mt-4 inline-block" style="color:var(--accent)">view case study →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= NOTES ================= -->
+<section id="notes" class="py-24 border-t" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-6 md:px-8">
+    <div class="mb-10 reveal" data-reveal>
+      <p class="eyebrow mb-3">notes</p>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight">Thoughts & write-ups</h2>
+      <p class="mt-3 text-sm" style="color:var(--soft)">Short notes on patterns, tools, and things I learned while building.</p>
+    </div>
+
+    <div class="reveal" data-reveal>
+      <a href="#" class="notes-row flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 py-5 px-2 -mx-2 rounded-lg">
+        <span class="font-mono text-xs w-24 shrink-0" style="color:var(--soft)">23.03.2026</span>
+        <span class="font-display font-medium flex-1">Building Scalable Laravel APIs</span>
+        <span class="tag">Laravel</span><span class="tag">API Design</span>
+      </a>
+      <a href="#" class="notes-row flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 py-5 px-2 -mx-2 rounded-lg">
+        <span class="font-mono text-xs w-24 shrink-0" style="color:var(--soft)">04.03.2026</span>
+        <span class="font-display font-medium flex-1">Laravel Design Patterns: MVC to DDD</span>
+        <span class="tag">Architecture</span><span class="tag">DDD</span>
+      </a>
+      <a href="#" class="notes-row flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 py-5 px-2 -mx-2 rounded-lg">
+        <span class="font-mono text-xs w-24 shrink-0" style="color:var(--soft)">10.01.2025</span>
+        <span class="font-display font-medium flex-1">Dockerizing My Local Dev Environment</span>
+        <span class="tag">Docker</span><span class="tag">Workflow</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="py-24 border-t" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-6 md:px-8">
+    <div class="term max-w-3xl mx-auto reveal" data-reveal>
+      <div class="term-bar">
+        <span class="term-dot" style="background:#FF5F57"></span>
+        <span class="term-dot" style="background:#FEBC2E"></span>
+        <span class="term-dot" style="background:#28C840"></span>
+        <span class="ml-2 font-mono text-xs" style="color:var(--soft)">contact.ts</span>
+      </div>
+      <div class="p-8 md:p-10">
+        <pre class="font-mono text-[13px] leading-6 mb-6"><span class="tok-key">function</span> <span class="tok-fn">contact</span>(you) {
+  <span class="tok-key">return</span> sodiq.<span class="tok-fn">reply</span>(you);
+}</pre>
+        <h3 class="font-display text-2xl md:text-3xl font-semibold">Got something to build, improve, or scale?</h3>
+        <p class="mt-3 text-sm md:text-base" style="color:var(--soft)">
+          Open to engineering roles, freelance work, and technical collaborations where clean code and thoughtful execution matter.
+        </p>
+        <div class="flex flex-wrap gap-4 mt-8">
+          <a href="mailto:hello@sodiqardianto.com" class="btn-primary rounded-full px-6 py-3 text-sm font-mono">hello@sodiqardianto.com</a>
+          <a href="https://github.com/sodiqardianto" class="btn-ghost rounded-full px-5 py-3 text-sm font-mono">GitHub</a>
+          <a href="https://www.linkedin.com/in/sodiqardianto/" class="btn-ghost rounded-full px-5 py-3 text-sm font-mono">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="py-10 border-t" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs" style="color:var(--soft)">
+    <span>© 2026 Sodiq Ardianto — built with intent.</span>
+    <span>Jakarta, Indonesia</span>
+  </div>
+</footer>
+
+<script>
+  // theme toggle
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  const iconSun = document.getElementById('iconSun');
+  const iconMoon = document.getElementById('iconMoon');
+
+  function applyTheme(mode){
+    if(mode === 'dark'){ root.classList.add('dark'); iconSun.classList.add('hidden'); iconMoon.classList.remove('hidden'); }
+    else { root.classList.remove('dark'); iconMoon.classList.add('hidden'); iconSun.classList.remove('hidden'); }
+  }
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+
+  themeBtn.addEventListener('click', () => {
+    const isDark = root.classList.contains('dark');
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  // mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  // nav shrink on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  });
+
+  // typing effect
+  const roles = ['software engineer', 'Laravel developer', 'React & Next.js builder', 'Flutter developer'];
+  const typedEl = document.getElementById('typed');
+  let ri = 0, ci = 0, deleting = false;
+
+  function tick(){
+    const word = roles[ri];
+    if(!deleting){
+      ci++;
+      typedEl.textContent = word.slice(0, ci);
+      if(ci === word.length){ deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      ci--;
+      typedEl.textContent = word.slice(0, ci);
+      if(ci === 0){ deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(tick, deleting ? 40 : 70);
+  }
+  tick();
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

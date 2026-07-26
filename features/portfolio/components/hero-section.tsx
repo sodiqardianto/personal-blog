@@ -1,54 +1,90 @@
-import { ArrowRightIcon } from "@/shared/ui";
-import { PageSection } from "@/shared/ui";
+import { TypingRole } from "@/features/portfolio/components/typing-role";
 
 export function HeroSection() {
   return (
-    <PageSection
-      id="hero"
-      className="hero-glow relative min-h-[calc(100vh-60px)] overflow-x-clip"
-      contentClassName="relative flex min-h-[calc(100vh-60px)] flex-col justify-center"
-      disableVerticalPadding
+    <section
+      id="top"
+      className="relative overflow-hidden pb-20 pt-28 sm:pb-24 sm:pt-36 md:pb-32 md:pt-44"
     >
-      <div className="eyebrow-line relative z-1 mb-6 flex items-center gap-3 text-[0.78rem] font-medium uppercase tracking-widest text-blue opacity-0 animate-fade-up-d1 dark:text-blue-dark">
-        Available for projects
-      </div>
+      <div className="ambient-grid pointer-events-none absolute inset-0" />
 
-      <h1 className="relative z-1 mb-6 font-serif text-[clamp(2rem,11vw,3.4rem)] leading-[1.02] tracking-[-0.025em] text-ink opacity-0 animate-fade-up-d2 sm:text-[clamp(2.8rem,7vw,5.4rem)] sm:leading-[1.08] dark:text-slate-100">
-        Hi, I&apos;m
-        <br />
-        <em className="text-blue dark:text-blue-dark">Sodiq Ardianto</em>
-        <br />a software engineer.
-      </h1>
+      <div className="relative mx-auto grid min-w-0 max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-14 md:px-8">
+        <div className="min-w-0">
+          <div className="relative mb-6 inline-flex items-center gap-2">
+            <span className="status-dot relative" />
+            <span className="eyebrow">available for projects</span>
+          </div>
 
-      <p className="relative z-1 mb-10 max-w-120 text-[clamp(0.975rem,2vw,1.1rem)] leading-[1.75] text-ink/60 opacity-0 animate-fade-up-d3 dark:text-slate-400">
-        I build web and mobile applications with Laravel, Express,
-        React/Next.js, and Flutter. My approach is simple: keep the architecture
-        clean, keep the code maintainable, and build products that work well for
-        both users and teams.
-      </p>
+          <h1 className="font-display text-[clamp(2.25rem,10vw,2.6rem)] font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-[3.4rem]">
+            I build software
+            <br />
+            that stays <span className="text-accent">reliable</span>
+            <br />
+            as it grows.
+          </h1>
 
-      <div className="relative z-1 flex flex-wrap gap-3 opacity-0 animate-fade-up-d4">
-        <a
-          href="#work"
-          className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] dark:bg-blue-dark"
-        >
-          View my work
-          <ArrowRightIcon className="h-4 w-4 stroke-[2.2]" />
-        </a>
-        <a
-          href="#contact"
-          className="inline-flex items-center gap-2 rounded-full border border-blue/15 bg-transparent px-5 py-2.5 text-sm font-medium text-ink/60 transition-all hover:border-blue hover:bg-blue/6 hover:text-ink dark:border-blue-dark/20 dark:text-slate-400 dark:hover:border-blue-dark dark:hover:text-slate-200"
-        >
-          Get in touch
-        </a>
-      </div>
+          <p className="mt-6 min-h-10 font-mono text-sm text-soft sm:min-h-0 sm:text-base md:text-lg">
+            Hi, I&apos;m Sodiq — a <TypingRole />
+          </p>
 
-      <div className="relative z-1 mt-14 flex items-center gap-2 text-[0.78rem] text-ink/40 opacity-0 animate-fade-up-d6 dark:text-slate-600">
-        <div className="relative flex h-8 w-5 justify-center rounded-full border border-blue/20 dark:border-blue-dark/20">
-          <span className="absolute top-1.25 h-1.5 w-0.75 rounded-full bg-blue animate-bounce-dot dark:bg-blue-dark" />
+          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-soft">
+            I work across backend, frontend, and mobile — Laravel, Express,
+            React/Next.js, and Flutter. My focus is clean architecture,
+            maintainable code, and shipping products that actually hold up in
+            production.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+            <a
+              href="#work"
+              className="button-primary inline-flex w-full rounded-full px-6 py-3 font-mono text-sm sm:w-auto"
+            >
+              View my work
+            </a>
+            <a
+              href="#contact"
+              className="button-ghost inline-flex w-full rounded-full px-6 py-3 font-mono text-sm sm:w-auto"
+            >
+              Get in touch
+            </a>
+          </div>
         </div>
-        <span>Scroll to explore</span>
+
+        <div className="terminal-card sr min-w-0 max-w-full overflow-hidden">
+          <div className="terminal-bar">
+            <span className="terminal-dot bg-[#FF5F57]" />
+            <span className="terminal-dot bg-[#FEBC2E]" />
+            <span className="terminal-dot bg-[#28C840]" />
+            <span className="ml-2 font-mono text-xs text-soft">about.ts</span>
+          </div>
+          <pre className="block max-w-full overflow-x-auto p-4 font-mono text-xs leading-6 sm:p-5 sm:text-[13px]">
+            <span className="token-comment">{"// who's building this"}</span>
+            {"\n"}
+            <span className="token-key">const</span>
+            {" sodiq = {\n  role: "}
+            <span className="token-string">&quot;Software Engineer&quot;</span>
+            {",\n  base: "}
+            <span className="token-string">&quot;Indonesia&quot;</span>
+            {",\n  stack: ["}
+            <span className="token-string">&quot;Laravel&quot;</span>
+            {", "}
+            <span className="token-string">&quot;Next.js&quot;</span>
+            {", "}
+            <span className="token-string">&quot;Flutter&quot;</span>
+            {"],\n  values: ["}
+            <span className="token-string">&quot;clean architecture&quot;</span>
+            {", "}
+            <span className="token-string">&quot;maintainable code&quot;</span>
+            {"],\n  "}
+            <span className="token-function">isOpenToWork</span>
+            {": "}
+            <span className="token-key">true</span>
+            {",\n};\n\n"}
+            <span className="token-function">connect</span>
+            {"(sodiq);"}
+          </pre>
+        </div>
       </div>
-    </PageSection>
+    </section>
   );
 }

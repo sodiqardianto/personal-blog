@@ -18,13 +18,13 @@ export default function ProjectsPage() {
       <div className="sticky top-0 z-[1010] flex h-[60px] items-center justify-between border-b border-blue/10 bg-slate-50/90 px-[clamp(1.25rem,5vw,3.5rem)] backdrop-blur-lg dark:border-blue-dark/12 dark:bg-navy-900/92">
         <Link
           href="/#work"
-          className="inline-flex cursor-pointer items-center gap-2 bg-transparent text-sm text-ink/50 transition-colors hover:text-blue dark:text-slate-500 dark:hover:text-blue-dark"
+          className="inline-flex cursor-pointer items-center gap-2 bg-transparent text-sm text-soft transition-colors hover:text-accent"
         >
           <ArrowLeftIcon className="h-4 w-4 stroke-[2.2]" />
           Back to work
         </Link>
 
-        <span className="text-xs text-ink/40 dark:text-slate-600">
+        <span className="text-xs text-soft">
           {String(projects.length).padStart(2, "0")} projects
         </span>
       </div>
@@ -34,14 +34,19 @@ export default function ProjectsPage() {
         backgroundClassName="bg-slate-100 dark:bg-navy-800"
       >
         <SectionHeading label="Work" title="All projects" />
-        <p className="sr mb-10 max-w-[620px] leading-[1.8] text-ink/60 dark:text-slate-400">
+        <p className="sr mb-10 max-w-[620px] leading-[1.8] text-soft">
           A collection of projects focused on scalable systems, internal tools,
           and product work across backend, frontend, and platform engineering.
         </p>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              preload={index === 0}
+              reveal={index !== 0}
+            />
           ))}
         </div>
       </PageSection>
