@@ -44,7 +44,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable} scroll-smooth`}
     >
-      <body className="bg-paper font-sans text-ink antialiased transition-colors duration-300">
+      <body
+        suppressHydrationWarning
+        className="bg-paper font-sans text-ink antialiased transition-colors duration-300"
+      >
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>

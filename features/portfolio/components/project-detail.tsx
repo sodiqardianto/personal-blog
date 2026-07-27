@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeftIcon, ExternalLinkIcon } from "@/shared/ui";
+import { ArrowLeftIcon, ExternalLinkIcon, BlurImage } from "@/shared/ui";
 import { projectAccentClasses } from "@/features/portfolio/lib/project-accent";
 import type { Project } from "@/features/portfolio/types";
 import { ProjectGallery } from "@/features/portfolio/components/project-gallery";
@@ -28,13 +28,14 @@ export function ProjectDetail({ project, totalProjects }: ProjectDetailProps) {
       </div>
 
       <div className="mx-auto max-w-200 px-[clamp(1.25rem,5vw,2rem)]">
-        <div className="my-10 flex aspect-video w-full items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-navy-800">
+        <div className="my-10 relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-navy-800">
           {project.hero.imageSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <BlurImage
               src={project.hero.imageSrc}
               alt={project.hero.alt ?? project.title}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 800px"
+              className="object-cover"
             />
           ) : (
             <div

@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/features/portfolio/types";
+import { BlurImage } from "@/shared/ui";
 
 type ProjectCardProps = {
   project: Project;
@@ -30,7 +30,7 @@ export function ProjectCard({
     >
       <div className="project-thumb flex h-40 items-center justify-center">
         {project.hero.imageSrc ? (
-          <Image
+          <BlurImage
             src={project.hero.imageSrc}
             alt={project.hero.alt ?? project.title}
             fill

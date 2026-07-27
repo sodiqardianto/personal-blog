@@ -10,8 +10,8 @@ export const metadata: Metadata = {
     "Selected software engineering projects by Sodiq Ardianto, covering web systems, internal tools, and product-focused engineering work.",
 };
 
-export default function ProjectsPage() {
-  const projects = getProjects();
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <main className="relative z-1 pt-15">

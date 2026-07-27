@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BlurImage } from "@/shared/ui";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -17,6 +18,32 @@ function hasImage(
   item: GalleryItem,
 ): item is GalleryItem & { imageSrc: string } {
   return typeof item.imageSrc === "string" && item.imageSrc.length > 0;
+}
+
+function GalleryImage({
+  src,
+  alt,
+  sizes,
+  className,
+  fillWrapperClassName = "",
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  className: string;
+  fillWrapperClassName?: string;
+}) {
+  return (
+    <span className={`block h-full w-full ${fillWrapperClassName}`}>
+      <BlurImage
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className={className}
+      />
+    </span>
+  );
 }
 
 export function ProjectGallery({ items }: ProjectGalleryProps) {
@@ -97,11 +124,11 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
               }
               className="gallery-item relative aspect-4/3 cursor-pointer overflow-hidden rounded-xl bg-slate-100 text-left dark:bg-navy-800"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <GalleryImage
                 src={galleryItem.imageSrc}
                 alt={galleryItem.alt ?? galleryItem.caption}
-                className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.05]"
+                sizes="(max-width: 768px) 50vw, 400px"
+                className="object-cover transition-transform duration-300 hover:scale-[1.05]"
               />
               <div className="cap absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/50 to-transparent p-2.5 pl-3 text-[0.72rem] text-white">
                 Click to enlarge
@@ -162,15 +189,18 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
           ) : null}
 
           <div className="flex min-h-screen items-center justify-center px-5 py-20">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={lightboxImages[lightboxIndex].imageSrc}
-              alt={
-                lightboxImages[lightboxIndex].alt ??
-                lightboxImages[lightboxIndex].caption
-              }
-              className="max-h-[88vh] max-w-[92vw] rounded-lg object-contain"
-            />
+              <div className="relative h-[88vh] w-[92vw]">
+                <GalleryImage
+                  src={lightboxImages[lightboxIndex].imageSrc}
+                  alt={
+                    lightboxImages[lightboxIndex].alt ??
+                    lightboxImages[lightboxIndex].caption
+                  }
+                  sizes="92vw"
+                  fillWrapperClassName="rounded-lg overflow-hidden"
+                  className="object-contain"
+                />
+              </div>
           </div>
 
           <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs text-white/50">

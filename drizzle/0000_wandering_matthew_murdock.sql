@@ -1,0 +1,22 @@
+CREATE TABLE "posts" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"slug" varchar(255) NOT NULL,
+	"title" varchar(512) NOT NULL,
+	"excerpt" text DEFAULT '' NOT NULL,
+	"author_name" varchar(255) DEFAULT 'Sodiq Ardianto' NOT NULL,
+	"published_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"reading_time" varchar(32) DEFAULT '1 min read' NOT NULL,
+	"tags" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"cover_image_url" text,
+	"seo_title" varchar(512),
+	"seo_description" text,
+	"canonical_url" text,
+	"body" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"views_count" integer DEFAULT 0 NOT NULL,
+	"likes_count" integer DEFAULT 0 NOT NULL,
+	"shares_count" integer DEFAULT 0 NOT NULL,
+	"published" boolean DEFAULT true NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "posts_slug_unique" UNIQUE("slug")
+);

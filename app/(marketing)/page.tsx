@@ -13,7 +13,7 @@ import {
 
 export default async function Home() {
   const posts = await getPosts({ perPage: 5 });
-  const featuredProjects = getFeaturedProjects();
+  const featuredProjects = await getFeaturedProjects();
 
   return (
     <main className="relative z-1">

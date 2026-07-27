@@ -7,7 +7,7 @@ type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getProjectSlugs();
 }
 
@@ -15,7 +15,7 @@ export async function generateMetadata({
   params,
 }: ProjectDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -33,7 +33,7 @@ export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -41,7 +41,7 @@ export default async function ProjectDetailPage({
 
   return (
     <main className="relative z-1 pt-15">
-      <ProjectDetail project={project} totalProjects={getProjects().length} />
+      <ProjectDetail project={project} totalProjects={(await getProjects()).length} />
     </main>
   );
 }

@@ -65,6 +65,7 @@ export type PostPreview = {
   viewsCount: number;
   likesCount: number;
   sharesCount: number;
+  coverImageUrl?: string | null;
 };
 
 export type Post = PostPreview & {

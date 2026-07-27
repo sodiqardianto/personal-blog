@@ -1,0 +1,23 @@
+CREATE TABLE "projects" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"number" varchar(8) DEFAULT '' NOT NULL,
+	"slug" varchar(255) NOT NULL,
+	"accent" varchar(32) DEFAULT 'indigo' NOT NULL,
+	"title" varchar(512) NOT NULL,
+	"summary" text DEFAULT '' NOT NULL,
+	"year" varchar(16) DEFAULT '' NOT NULL,
+	"role" varchar(255) DEFAULT '' NOT NULL,
+	"client" varchar(255) DEFAULT '' NOT NULL,
+	"live_url" text,
+	"featured" boolean DEFAULT false NOT NULL,
+	"hero_image_url" text,
+	"hero_alt" text,
+	"hero_placeholder" varchar(8) DEFAULT '' NOT NULL,
+	"tags" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"overview" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"gallery" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"sort_order" integer DEFAULT 0 NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "projects_slug_unique" UNIQUE("slug")
+);

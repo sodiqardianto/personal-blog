@@ -6,19 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "bun --env-file=.env run scripts/seed-posts.ts",
+    "db:seed:projects": "bun --env-file=.env run scripts/seed-projects.ts",
+    "minio:setup": "bun --env-file=.env run scripts/mkbucket.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1095.0",
     "axios": "^1.13.6",
+    "busboy": "^1.6.0",
+    "drizzle-orm": "^0.45.2",
     "next": "16.2.1",
+    "postgres": "^3.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/busboy": "^1.5.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
