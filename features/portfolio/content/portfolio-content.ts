@@ -7,7 +7,7 @@ import type {
 export const siteMetadata: SiteMetadata = {
   author: "Sodiq Ardianto",
   location: "Indonesia",
-  cvHref: "#",
+  cvHref: "/cv.pdf",
 };
 
 export const navItems: NavItem[] = [

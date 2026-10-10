@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/shared/ui";
+import { CloseIcon, MenuIcon, ThemeSwitcher } from "@/shared/ui";
 import type { NavItem } from "@/features/portfolio/types";
 import { cn } from "@/lib/utils";
 
@@ -93,12 +93,6 @@ export function Header({ navItems }: HeaderProps) {
   const sectionHref = (item: NavItem) =>
     pathname === "/" ? item.href : `/${item.href}`;
 
-  const toggleTheme = () => {
-    const nextIsDark = !document.documentElement.classList.contains("dark");
-    document.documentElement.classList.toggle("dark", nextIsDark);
-    localStorage.setItem("theme", nextIsDark ? "dark" : "light");
-  };
-
   return (
     <header
       id="site-header"
@@ -144,15 +138,7 @@ export function Header({ navItems }: HeaderProps) {
           >
             say hi
           </Link>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="theme-toggle flex items-center justify-center"
-            aria-label="Toggle color theme"
-          >
-            <SunIcon className="h-4 w-4 stroke-2 dark:hidden" />
-            <MoonIcon className="hidden h-4 w-4 stroke-2 dark:block" />
-          </button>
+          <ThemeSwitcher />
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}

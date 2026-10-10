@@ -11,7 +11,11 @@ export function Footer({ author, location, cvHref }: FooterProps) {
         <span>© 2025 {author}. Made with care.</span>
         <span>
           {location} ·{" "}
-          <a href={cvHref} className="transition-colors hover:text-accent">
+          <a
+            href={cvHref}
+            download
+            className="transition-colors hover:text-accent"
+          >
             Download CV
           </a>
         </span>
