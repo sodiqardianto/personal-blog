@@ -13,7 +13,7 @@ export const buttonStyles = {
 
 /** Round icon button used for the theme and menu toggles. */
 export const iconButtonStyles =
-  "size-[38px] cursor-pointer items-center justify-center rounded-full border border-line transition-[border-color,rotate] duration-250 hover:rotate-20 hover:border-accent";
+  "size-[38px] cursor-pointer items-center justify-center rounded-full border border-line [transition:border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:border-accent active:scale-[0.97]";
 
 /** Underline grows on hover; `aria-current` keeps it drawn for the active link. */
 export const navLinkStyles =
