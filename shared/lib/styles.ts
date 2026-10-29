@@ -4,7 +4,7 @@
  */
 
 const buttonBase =
-  "items-center justify-center transition-[translate,opacity,border-color] duration-250 hover:-translate-y-0.5";
+  "items-center justify-center [transition:translate_250ms_ease,opacity_250ms_ease,border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 active:scale-[0.97]";
 
 export const buttonStyles = {
   primary: `${buttonBase} bg-ink text-paper hover:opacity-90`,
@@ -24,7 +24,7 @@ export const eyebrowStyles =
   "font-mono text-[0.8rem] tracking-[0.02em] text-accent-2 before:text-soft before:content-['//_']";
 
 export const cardStyles =
-  "rounded-2xl border border-line bg-surface transition-[translate,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)]";
+  "rounded-2xl border border-line bg-surface [transition:translate_200ms_ease,border-color_200ms_ease,box-shadow_200ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)] active:scale-[0.985]";
 
 export const tagStyles =
   "rounded-full border border-line px-2 py-0.5 font-mono text-[0.72rem] text-soft";
