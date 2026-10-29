@@ -46,6 +46,7 @@ export default async function ProjectsPage() {
             <ProjectCard
               key={project.id}
               project={project}
+              index={index}
               preload={index === 0}
               reveal={index !== 0}
             />
