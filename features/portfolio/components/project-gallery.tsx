@@ -122,7 +122,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
                   items.slice(0, index + 1).filter(hasImage).length - 1,
                 )
               }
-              className="gallery-item relative aspect-4/3 cursor-pointer overflow-hidden rounded-xl bg-slate-100 text-left dark:bg-navy-800"
+              className="group relative aspect-4/3 cursor-pointer overflow-hidden rounded-xl bg-slate-100 text-left dark:bg-navy-800"
             >
               <GalleryImage
                 src={galleryItem.imageSrc}
@@ -130,7 +130,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
                 sizes="(max-width: 768px) 50vw, 400px"
                 className="object-cover transition-transform duration-300 hover:scale-[1.05]"
               />
-              <div className="cap absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/50 to-transparent p-2.5 pl-3 text-[0.72rem] text-white">
+              <div className="absolute bottom-0 opacity-0 transition-opacity duration-250 group-hover:opacity-100 left-0 right-0 bg-linear-to-t from-black/50 to-transparent p-2.5 pl-3 text-[0.72rem] text-white">
                 Click to enlarge
               </div>
             </button>

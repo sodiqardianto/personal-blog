@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @config "../tailwind.config.mjs";
 
+/*
+ * Styling is utility-first: components compose Tailwind utilities, and
+ * repeated compositions live in `shared/lib/styles.ts`. This file only holds
+ * design tokens, animations, and global rules that can't sit on an element.
+ */
+
 @theme inline {
   --color-paper: var(--paper);
   --color-surface: var(--surface);
@@ -23,6 +29,116 @@
   --font-serif: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
+}
+
+@theme {
+  /* Match the plain `ease` the hand-written CSS used before. */
+  --default-transition-timing-function: ease;
+
+  --animate-slide-down: slide-down 0.2s ease forwards;
+  --animate-fade-in: fade-in 0.28s ease forwards;
+  --animate-typing-blink: typing-blink 1s steps(1) infinite;
+  --animate-status-pulse: status-pulse 1.8s ease-out infinite;
+  --animate-theme-icon-in: theme-icon-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-engagement-like: engagement-like 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-engagement-like-btn: engagement-like-btn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-engagement-share: engagement-share 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes typing-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes status-pulse {
+    0% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(2.6);
+    }
+  }
+
+  @keyframes theme-icon-in {
+    from {
+      opacity: 0;
+      transform: scale(0.4) rotate(-90deg);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes engagement-like {
+    0% {
+      transform: scale(1);
+    }
+
+    45% {
+      transform: scale(1.34) rotate(-8deg);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes engagement-like-btn {
+    0% {
+      transform: scale(1);
+    }
+
+    45% {
+      transform: scale(1.04);
+      box-shadow: 0 10px 24px rgba(47, 84, 235, 0.16);
+    }
+
+    100% {
+      transform: scale(1);
+      box-shadow: none;
+    }
+  }
+
+  @keyframes engagement-share {
+    0% {
+      transform: translateX(0) scale(1);
+    }
+
+    35% {
+      transform: translateX(2px) translateY(-2px) scale(1.08);
+    }
+
+    100% {
+      transform: translateX(0) scale(1);
+    }
+  }
 }
 
 @layer base {
@@ -50,10 +166,6 @@
     --slate-100: #e8e7e3;
   }
 
-  * {
-    box-sizing: border-box;
-  }
-
   html {
     scroll-behavior: smooth;
     width: 100%;
@@ -74,13 +186,6 @@
     color: white;
   }
 
-  #site-header,
-  #site-mobile-menu {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: clip;
-  }
-
   body[data-overlay-open="true"] #site-header,
   body[data-overlay-open="true"] #site-mobile-menu,
   body[data-overlay-open="true"] .project-detail-header {
@@ -88,446 +193,12 @@
   }
 }
 
-@layer utilities {
-  .ambient-grid {
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-    opacity: 0.5;
-  }
-
-  .eyebrow {
-    color: var(--accent-2);
-    font-family: var(--font-mono), monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-  }
-
-  .eyebrow::before {
-    content: "// ";
-    color: var(--soft);
-  }
-
-  .terminal-card {
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--surface);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 20px 45px -25px rgba(20, 23, 26, 0.35);
-  }
-
-  .terminal-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .terminal-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-  }
-
-  .token-key { color: var(--accent); }
-  .token-string { color: var(--accent-2); }
-  .token-comment { color: var(--soft); }
-  .token-function { color: var(--amber); }
-
-  .typing-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 1.05em;
-    margin-left: 3px;
-    vertical-align: -2px;
-    background: var(--accent);
-    animation: typingBlink 1s steps(1) infinite;
-  }
-
-  .site-header {
-    background: color-mix(in srgb, var(--paper) 78%, transparent);
-    backdrop-filter: blur(10px);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .site-header.scrolled {
-    border-color: var(--line);
-    box-shadow: 0 8px 24px -20px rgba(0, 0, 0, 0.4);
-  }
-
-  .nav-link {
-    position: relative;
-    color: var(--soft);
-    transition: color 0.25s ease;
-  }
-
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.25s ease;
-  }
-
-  .nav-link:hover { color: var(--ink); }
-  .nav-link:hover::after { width: 100%; }
-  .nav-link.active { color: var(--ink); }
-  .nav-link.active::after { width: 100%; }
-
-  .portfolio-card {
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--surface);
-    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-  }
-
-  .portfolio-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 24px 48px -28px rgba(20, 23, 26, 0.35);
-  }
-
-  .portfolio-tag {
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 2px 8px;
-    color: var(--soft);
-    font-family: var(--font-mono), monospace;
-    font-size: 0.72rem;
-  }
-
-  .project-thumb {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  }
-
-  .project-thumb::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0 2px, transparent 2px 14px);
-  }
-
-  .button-primary,
-  .button-ghost {
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
-  }
-
-  .button-primary {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .button-primary:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-  }
-
-  .button-ghost {
-    border: 1px solid var(--line);
-    color: var(--ink);
-  }
-
-  .button-ghost:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-  }
-
-  .status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--accent-2);
-  }
-
-  .status-dot::after {
-    content: "";
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--accent-2);
-    animation: statusPulse 1.8s ease-out infinite;
-  }
-
-  .theme-toggle {
-    width: 38px;
-    height: 38px;
-    cursor: pointer;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    transition: border-color 0.25s ease, transform 0.25s ease;
-  }
-
-  .theme-toggle:hover {
-    transform: rotate(20deg);
-    border-color: var(--accent);
-  }
-
-  .notes-row {
-    border-bottom: 1px solid var(--line);
-    transition: background 0.25s ease, padding-left 0.25s ease;
-  }
-
-  .notes-row:hover {
-    padding-left: 10px;
-    background: color-mix(in srgb, var(--accent) 6%, transparent);
-  }
-
-  .grid-bg::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(47, 84, 235, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(47, 84, 235, 0.08) 1px, transparent 1px);
-    background-size: 52px 52px;
-  }
-
-  .dark .grid-bg::before {
-    background-image:
-      linear-gradient(rgba(91, 127, 255, 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(91, 127, 255, 0.07) 1px, transparent 1px);
-  }
-
-  .hero-glow::after {
-    content: "";
-    position: absolute;
-    top: -80px;
-    right: -120px;
-    width: 560px;
-    height: 560px;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(circle, rgba(47, 84, 235, 0.14) 0%, transparent 68%);
-  }
-
-  .sr {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.55s ease,
-      transform 0.55s ease;
-  }
-
-  .sr.on {
-    opacity: 1;
-    transform: none;
-  }
-
-  .eyebrow-line::before {
-    content: "";
-    display: block;
-    width: 26px;
-    height: 1px;
-    background: currentColor;
-  }
-
-  .overlay-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(47, 84, 235, 0.3) transparent;
-  }
-
-  .gallery-item .cap {
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-
-  .gallery-item:hover .cap {
-    opacity: 1;
-  }
-
-  .wc {
-    transition:
-      transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.28s,
-      border-color 0.28s;
-  }
-
-  .wc:hover {
-    transform: translateY(-4px);
-  }
-
-  .thumb-inner {
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .wc:hover .thumb-inner {
-    transform: scale(1.04);
-  }
-
-  .wcta {
-    transition: gap 0.28s;
-  }
-
-  .wc:hover .wcta {
-    gap: 0.6rem;
-  }
-
-  .brow {
-    transition: padding-left 0.28s;
-  }
-
-  .brow:hover {
-    padding-left: 0.4rem;
-  }
-
-  .brow:hover .btt {
-    color: #2f54eb;
-  }
-
-  .dark .brow:hover .btt {
-    color: #5b7fff;
-  }
-
-  #pv,
-  #prv {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(47, 84, 235, 0.25) transparent;
-  }
-
-  .animate-fade-up {
-    animation: fadeUp 0.65s ease forwards;
-  }
-
-  .animate-fade-up-d1 {
-    animation: fadeUp 0.65s 0.1s ease forwards;
-  }
-
-  .animate-fade-up-d2 {
-    animation: fadeUp 0.65s 0.2s ease forwards;
-  }
-
-  .animate-fade-up-d3 {
-    animation: fadeUp 0.65s 0.3s ease forwards;
-  }
-
-  .animate-fade-up-d4 {
-    animation: fadeUp 0.65s 0.4s ease forwards;
-  }
-
-  .animate-fade-up-d6 {
-    animation: fadeUp 0.65s 0.6s ease forwards;
-  }
-
-  .animate-slide-down {
-    animation: slideDown 0.2s ease forwards;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.28s ease forwards;
-  }
-
-  .animate-bounce-dot {
-    animation: bounceDot 1.8s ease-in-out infinite;
-  }
-
-  .animate-engagement-like {
-    animation: engagementLike 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .animate-engagement-like-btn {
-    animation: engagementLikeButton 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .animate-engagement-share {
-    animation: engagementShare 0.46s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .theme-icon {
-    animation: themeIconIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  /* Freeze color transitions while the circular reveal runs. */
-  .theme-switching,
-  .theme-switching *,
-  .theme-switching *::before,
-  .theme-switching *::after {
-    transition: none !important;
-  }
-
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes typingBlink {
-  50% { opacity: 0; }
-}
-
-@keyframes statusPulse {
-  0% { opacity: 0.6; transform: scale(1); }
-  100% { opacity: 0; transform: scale(2.6); }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes bounceDot {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  75% {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-}
-
-@keyframes themeIconIn {
-  from {
-    opacity: 0;
-    transform: scale(0.4) rotate(-90deg);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* Freeze color transitions while the circular theme reveal runs. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
 }
 
 /* Circular theme reveal: the new snapshot is clipped from the toggle via JS. */
@@ -539,50 +210,6 @@
 
 ::view-transition-new(root) {
   z-index: 2;
-}
-
-@keyframes engagementLike {
-  0% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(1.34) rotate(-8deg);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes engagementLikeButton {
-  0% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(1.04);
-    box-shadow: 0 10px 24px rgba(47, 84, 235, 0.16);
-  }
-
-  100% {
-    transform: scale(1);
-    box-shadow: none;
-  }
-}
-
-@keyframes engagementShare {
-  0% {
-    transform: translateX(0) scale(1);
-  }
-
-  35% {
-    transform: translateX(2px) translateY(-2px) scale(1.08);
-  }
-
-  100% {
-    transform: translateX(0) scale(1);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

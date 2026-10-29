@@ -47,7 +47,7 @@ export function TypingRole() {
       <span className="sr-only">software engineer</span>
       <span aria-hidden="true">
         {currentRole.slice(0, visibleLength)}
-        <span className="typing-cursor" />
+        <span className="ml-[3px] inline-block h-[1.05em] w-2 animate-typing-blink bg-accent align-[-2px]" />
       </span>
     </>
   );

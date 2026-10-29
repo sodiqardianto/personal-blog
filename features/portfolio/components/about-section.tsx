@@ -1,3 +1,11 @@
+import { cn } from "@/lib/utils";
+import {
+  cardStyles,
+  eyebrowStyles,
+  revealStyles,
+  tagStyles,
+} from "@/shared/lib/styles";
+
 type AboutSectionProps = {
   stackItems: string[];
   currentFocus: string[];
@@ -7,7 +15,7 @@ function PillList({ items }: { items: string[] }) {
   return (
     <ul className="flex list-none flex-wrap gap-2">
       {items.map((item) => (
-        <li key={item} className="portfolio-tag cursor-default">
+        <li key={item} className={cn(tagStyles, "cursor-default")}>
           {item}
         </li>
       ))}
@@ -22,14 +30,14 @@ export function AboutSection({
   return (
     <section id="about" className="border-t border-line py-24">
       <div className="mx-auto grid max-w-6xl gap-14 px-6 md:grid-cols-[1fr_1.3fr] md:px-8">
-        <div className="sr">
-          <p className="eyebrow mb-3">about</p>
+        <div className={revealStyles}>
+          <p className={cn(eyebrowStyles, "mb-3")}>about</p>
           <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
             A bit about me
           </h2>
         </div>
 
-        <div className="sr">
+        <div className={revealStyles}>
           <p className="text-[15px] leading-relaxed text-soft md:text-base">
             I&apos;m Sodiq Ardianto, a software engineer from Indonesia who
             works across backend, frontend, and mobile development. I enjoy
@@ -46,11 +54,11 @@ export function AboutSection({
           </p>
 
           <div className="mt-10 grid gap-3 sm:grid-cols-2">
-            <div className="portfolio-card p-5">
+            <div className={cn(cardStyles, "p-5")}>
               <p className="mb-3 font-mono text-xs text-soft">what I work with</p>
               <PillList items={stackItems} />
             </div>
-            <div className="portfolio-card p-5">
+            <div className={cn(cardStyles, "p-5")}>
               <p className="mb-3 font-mono text-xs text-soft">currently</p>
               <PillList items={currentFocus} />
             </div>

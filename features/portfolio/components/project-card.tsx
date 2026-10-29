@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/features/portfolio/types";
+import { cn } from "@/lib/utils";
+import { cardStyles, revealStyles, tagStyles } from "@/shared/lib/styles";
 import { BlurImage } from "@/shared/ui";
 
 type ProjectCardProps = {
@@ -26,9 +28,9 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className={`portfolio-card group block p-5${reveal ? " sr" : ""}`}
+      className={cn(cardStyles, "group block p-5", reveal && revealStyles)}
     >
-      <div className="project-thumb flex h-40 items-center justify-center">
+      <div className="relative flex h-40 items-center justify-center overflow-hidden rounded-xl bg-linear-135/srgb from-accent to-accent-2 before:absolute before:inset-0 before:bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.12)_0_2px,transparent_2px_14px)]">
         {project.hero.imageSrc ? (
           <BlurImage
             src={project.hero.imageSrc}
@@ -47,7 +49,7 @@ export function ProjectCard({
 
       <div className="mt-5 flex flex-wrap gap-2">
         {project.tags.map((tag) => (
-          <span key={tag} className="portfolio-tag">{tag}</span>
+          <span key={tag} className={tagStyles}>{tag}</span>
         ))}
       </div>
       <h3 className="mt-3 font-display text-lg font-semibold">{project.title}</h3>
