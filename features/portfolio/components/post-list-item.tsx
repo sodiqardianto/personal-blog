@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { PostPreview } from "@/features/portfolio/types";
+import { tagStyles } from "@/shared/lib/styles";
 
 type PostListItemProps = {
   post: PostPreview;
@@ -16,13 +17,13 @@ export function PostListItem({ post }: PostListItemProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="notes-row -mx-2 flex flex-col gap-2 rounded-lg px-2 py-5 sm:flex-row sm:items-center sm:gap-6"
+      className="group -mx-2 flex flex-col gap-2 rounded-lg border-b border-line px-2 py-5 transition-[background-color] duration-250 hover:bg-accent/6 sm:flex-row sm:items-center sm:gap-6"
     >
-      <span className="w-24 shrink-0 font-mono text-xs text-soft">{formattedDate}</span>
-      <span className="flex-1 font-display font-medium">{post.title}</span>
-      <span className="flex flex-wrap gap-2">
+      <span className="transition-[translate] duration-200 ease-out-strong motion-safe:group-hover:translate-x-0.5 w-24 shrink-0 font-mono text-xs text-soft">{formattedDate}</span>
+      <span className="transition-[translate] duration-200 ease-out-strong motion-safe:group-hover:translate-x-0.5 flex-1 font-display font-medium">{post.title}</span>
+      <span className="transition-[translate] duration-200 ease-out-strong motion-safe:group-hover:translate-x-0.5 flex flex-wrap gap-2">
         {post.tags.map((tag) => (
-          <span key={tag} className="portfolio-tag">{tag}</span>
+          <span key={tag} className={tagStyles}>{tag}</span>
         ))}
       </span>
     </Link>

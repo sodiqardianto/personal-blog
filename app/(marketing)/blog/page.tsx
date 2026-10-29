@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { revealStyles } from "@/shared/lib/styles";
 import { ArrowLeftIcon, PageSection, SectionHeading } from "@/shared/ui";
 import { PostListItem } from "@/features/portfolio/components/post-list-item";
 import { getPosts } from "@/features/portfolio/lib/posts";
@@ -34,7 +36,7 @@ export default async function BlogPage() {
         backgroundClassName="bg-slate-50 dark:bg-navy-900"
       >
         <SectionHeading label="Writing" title="All notes" />
-        <p className="sr mb-10 max-w-[620px] leading-[1.8] text-ink/60 dark:text-slate-400">
+        <p className={cn(revealStyles, "mb-10 max-w-[620px] leading-[1.8] text-ink/60 dark:text-slate-400")}>
           Short essays and practical notes on software engineering, backend
           systems, frontend work, and the kinds of decisions that make products
           easier to build and maintain.

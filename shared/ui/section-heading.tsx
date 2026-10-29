@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { revealStyles } from "@/shared/lib/styles";
 
 type SectionHeadingProps = {
   label: string;
@@ -14,7 +15,8 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "sh mb-12 flex flex-wrap items-end gap-x-4 gap-y-3 sr sm:flex-nowrap sm:items-center",
+        revealStyles,
+        "mb-12 flex flex-wrap items-end gap-x-4 gap-y-3 sm:flex-nowrap sm:items-center",
         className,
       )}
     >

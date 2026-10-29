@@ -3,6 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "@/shared/ui/icons";
 import type { ThemeMode } from "@/features/portfolio/types";
+import { iconButtonStyles } from "@/shared/lib/styles";
 import {
   applyThemeMode,
   getNextThemeMode,
@@ -54,11 +55,11 @@ export function ThemeSwitcher() {
       ref={buttonRef}
       type="button"
       onClick={cycleTheme}
-      className="theme-toggle flex items-center justify-center"
+      className={`${iconButtonStyles} flex`}
       aria-label={`Color theme: ${label}. Click to change.`}
       title={`Theme: ${label}`}
     >
-      <Icon key={themeMode} className="theme-icon h-4 w-4 stroke-2" />
+      <Icon key={themeMode} className="h-4 w-4 motion-safe:animate-theme-icon-in stroke-2" />
     </button>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { revealStyles } from "@/shared/lib/styles";
 import { ArrowLeftIcon, PageSection, SectionHeading } from "@/shared/ui";
 import { ProjectCard } from "@/features/portfolio/components/project-card";
 import { getProjects } from "@/features/portfolio/lib/projects";
@@ -34,7 +36,7 @@ export default async function ProjectsPage() {
         backgroundClassName="bg-slate-100 dark:bg-navy-800"
       >
         <SectionHeading label="Work" title="All projects" />
-        <p className="sr mb-10 max-w-[620px] leading-[1.8] text-soft">
+        <p className={cn(revealStyles, "mb-10 max-w-[620px] leading-[1.8] text-soft")}>
           A collection of projects focused on scalable systems, internal tools,
           and product work across backend, frontend, and platform engineering.
         </p>
@@ -44,6 +46,7 @@ export default async function ProjectsPage() {
             <ProjectCard
               key={project.id}
               project={project}
+              index={index}
               preload={index === 0}
               reveal={index !== 0}
             />

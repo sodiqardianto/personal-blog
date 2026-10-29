@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon, ThemeSwitcher } from "@/shared/ui";
 import type { NavItem } from "@/features/portfolio/types";
 import { cn } from "@/lib/utils";
+import {
+  buttonStyles,
+  iconButtonStyles,
+  navLinkStyles,
+} from "@/shared/lib/styles";
 
 type HeaderProps = {
   navItems: NavItem[];
@@ -97,8 +102,10 @@ export function Header({ navItems }: HeaderProps) {
     <header
       id="site-header"
       className={cn(
-        "site-header fixed inset-x-0 top-0 z-50 border-b border-transparent",
-        isScrolled && "scrolled",
+        "fixed inset-x-0 top-0 z-50 w-full max-w-[100vw] overflow-x-clip border-b bg-paper/78 backdrop-blur-[10px] transition-[border-color,box-shadow] duration-300",
+        isScrolled
+          ? "border-line shadow-[0_8px_24px_-20px_rgba(0,0,0,0.4)]"
+          : "border-transparent",
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
@@ -122,7 +129,7 @@ export function Header({ navItems }: HeaderProps) {
                 key={item.sectionId}
                 href={sectionHref(item)}
                 aria-current={isActive ? "location" : undefined}
-                className={cn("nav-link lowercase", isActive && "active")}
+                className={cn(navLinkStyles, "lowercase")}
                 onClick={() => setActiveSection(item.sectionId)}
               >
                 {item.label}
@@ -134,7 +141,10 @@ export function Header({ navItems }: HeaderProps) {
         <div className="flex items-center gap-3">
           <Link
             href={pathname === "/" ? "#contact" : "/#contact"}
-            className="button-primary hidden rounded-full px-4 py-2 font-mono text-sm sm:inline-flex"
+            className={cn(
+              buttonStyles.primary,
+              "hidden rounded-full px-4 py-2 font-mono text-sm sm:inline-flex",
+            )}
           >
             say hi
           </Link>
@@ -142,7 +152,7 @@ export function Header({ navItems }: HeaderProps) {
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
-            className="hidden theme-toggle items-center justify-center max-md:flex"
+            className={cn(iconButtonStyles, "hidden max-md:flex")}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
@@ -158,8 +168,10 @@ export function Header({ navItems }: HeaderProps) {
       <div
         id="site-mobile-menu"
         className={cn(
-          "border-t border-line bg-paper px-6 py-4 md:hidden",
-          mobileOpen ? "block animate-slide-down" : "hidden",
+          "absolute inset-x-0 top-full w-full max-w-[100vw] overflow-x-clip border-b border-line bg-paper px-6 py-4 transition-[opacity,translate,visibility] ease-out-strong md:hidden",
+          mobileOpen
+            ? "duration-200"
+            : "pointer-events-none invisible motion-safe:-translate-y-2 opacity-0 duration-150",
         )}
       >
         <nav
@@ -174,7 +186,7 @@ export function Header({ navItems }: HeaderProps) {
                 key={item.sectionId}
                 href={sectionHref(item)}
                 aria-current={isActive ? "location" : undefined}
-                className={cn("nav-link w-fit lowercase", isActive && "active")}
+                className={cn(navLinkStyles, "w-fit lowercase")}
                 onClick={() => {
                   setActiveSection(item.sectionId);
                   setMobileOpen(false);

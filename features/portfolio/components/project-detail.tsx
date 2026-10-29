@@ -110,7 +110,7 @@ export function ProjectDetail({ project, totalProjects }: ProjectDetailProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] dark:bg-blue-dark"
+              className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-sm font-medium text-white [transition:translate_150ms_ease,box-shadow_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:active:scale-[0.97] motion-safe:hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(47,84,235,.35)] dark:bg-blue-dark"
             >
               Visit live site
               <ExternalLinkIcon className="h-4 w-4 stroke-[2.2]" />
@@ -119,7 +119,7 @@ export function ProjectDetail({ project, totalProjects }: ProjectDetailProps) {
 
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-blue/12 bg-transparent px-5 py-2.5 text-sm font-medium text-ink/55 transition-all hover:border-blue hover:bg-blue/6 hover:text-blue dark:border-blue-dark/15 dark:text-slate-400 dark:hover:border-blue-dark dark:hover:text-blue-dark"
+            className="inline-flex items-center gap-2 rounded-full border border-blue/12 bg-transparent px-5 py-2.5 text-sm font-medium text-ink/55 [transition:border-color_150ms_ease,background-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:active:scale-[0.97] hover:border-blue hover:bg-blue/6 hover:text-blue dark:border-blue-dark/15 dark:text-slate-400 dark:hover:border-blue-dark dark:hover:text-blue-dark"
           >
             Back to all work
           </Link>
