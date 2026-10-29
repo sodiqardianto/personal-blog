@@ -154,7 +154,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
             type="button"
             aria-label="Close image preview"
             onClick={() => setLightboxIndex(null)}
-            className="absolute right-5 top-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/12 text-white transition-all hover:bg-white/22"
+            className="absolute right-5 top-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/12 text-white [transition:background-color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.95] hover:bg-white/22"
           >
             <CloseIcon className="h-5 w-5 stroke-[2.2]" />
           </button>
@@ -170,7 +170,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
                       lightboxImages.length,
                   )
                 }
-                className="absolute left-5 top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/22"
+                className="absolute left-5 top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white [transition:background-color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.95] hover:bg-white/22"
               >
                 <ArrowLeftIcon className="h-5 w-5 stroke-[2.2]" />
               </button>
@@ -181,7 +181,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
                 onClick={() =>
                   setLightboxIndex((lightboxIndex + 1) % lightboxImages.length)
                 }
-                className="absolute right-5 top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/22"
+                className="absolute right-5 top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white [transition:background-color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.95] hover:bg-white/22"
               >
                 <ArrowRightIcon className="h-5 w-5 stroke-[2.2]" />
               </button>

@@ -296,7 +296,7 @@ export function PostEngagement({
           aria-expanded={shareMenuOpen}
           aria-haspopup="menu"
           className={cn(
-            "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
+            "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
             shareMenuOpen &&
               "border-blue/20 text-blue dark:border-blue-dark/25 dark:text-blue-dark",
           )}
@@ -371,7 +371,7 @@ export function PostEngagement({
         type="button"
         onClick={handleLike}
         className={cn(
-          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 transition-all hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
+          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
           likeAnimating && "animate-engagement-like-btn",
           entry.liked &&
             "border-rose-200 text-rose-600 dark:border-rose-400/30 dark:text-rose-300",
@@ -386,7 +386,7 @@ export function PostEngagement({
         >
           <HeartIcon
             className={cn(
-              "h-4 w-4 stroke-2 transition-all duration-200",
+              "h-4 w-4 stroke-2 transition-[color,fill,stroke] duration-200",
               entry.liked && "fill-current text-rose-500 stroke-rose-500",
             )}
           />
