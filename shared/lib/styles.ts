@@ -49,4 +49,4 @@ export const tokenStyles = {
  * the header, which adds `on` once the element enters the viewport.
  */
 export const revealStyles =
-  "sr translate-y-[18px] opacity-0 transition-[opacity,translate] duration-550 [&.on]:translate-none [&.on]:opacity-100";
+  "sr translate-y-[18px] opacity-0 transition-[opacity,translate] duration-550 ease-out-strong [&.on]:translate-none [&.on]:opacity-100";

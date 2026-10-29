@@ -35,14 +35,18 @@
   /* Match the plain `ease` the hand-written CSS used before. */
   --default-transition-timing-function: ease;
 
+  /* Strong curves: the built-in keywords are too weak to feel intentional. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+
   --animate-slide-down: slide-down 0.2s ease forwards;
   --animate-fade-in: fade-in 0.28s ease forwards;
   --animate-typing-blink: typing-blink 1s steps(1) infinite;
   --animate-status-pulse: status-pulse 1.8s ease-out infinite;
   --animate-theme-icon-in: theme-icon-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-engagement-like: engagement-like 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-engagement-like-btn: engagement-like-btn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-engagement-share: engagement-share 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-engagement-like: engagement-like 0.42s cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-engagement-like-btn: engagement-like-btn 0.42s cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-engagement-share: engagement-share 0.46s cubic-bezier(0.23, 1, 0.32, 1);
 
   @keyframes slide-down {
     from {

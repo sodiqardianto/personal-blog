@@ -2,7 +2,7 @@ import type { ThemeMode } from "@/features/portfolio/types";
 
 const THEME_STORAGE_KEY = "theme";
 const DEFAULT_THEME_MODE: ThemeMode = "system";
-const THEME_TRANSITION_DURATION = 600;
+const THEME_TRANSITION_DURATION = 500;
 const themeModes: ThemeMode[] = ["light", "system", "dark"];
 const themeListeners = new Set<() => void>();
 
@@ -126,7 +126,7 @@ export function transitionThemeMode(mode: ThemeMode, origin: TransitionOrigin) {
         },
         {
           duration: THEME_TRANSITION_DURATION,
-          easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+          easing: "cubic-bezier(0.77, 0, 0.175, 1)",
           pseudoElement: "::view-transition-new(root)",
         },
       );
