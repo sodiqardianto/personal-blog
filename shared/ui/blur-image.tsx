@@ -18,8 +18,8 @@ export function BlurImage({ className = "", ...props }: BlurImageProps) {
       }}
       placeholder={props.placeholder ?? "blur"}
       blurDataURL={props.blurDataURL ?? shimmerBlur()}
-      className={`transition-[opacity,filter] duration-700 ease-out ${
-        loaded ? "opacity-100 blur-0" : "opacity-0 blur-xl"
+      className={`transition-[opacity,filter] duration-400 ease-out-strong ${
+        loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
       } ${className}`}
     />
   );
