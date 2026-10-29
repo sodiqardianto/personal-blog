@@ -168,8 +168,10 @@ export function Header({ navItems }: HeaderProps) {
       <div
         id="site-mobile-menu"
         className={cn(
-          "w-full max-w-[100vw] overflow-x-clip border-t border-line bg-paper px-6 py-4 md:hidden",
-          mobileOpen ? "block animate-slide-down" : "hidden",
+          "absolute inset-x-0 top-full w-full max-w-[100vw] overflow-x-clip border-b border-line bg-paper px-6 py-4 transition-[opacity,translate,visibility] ease-out-strong md:hidden",
+          mobileOpen
+            ? "duration-200"
+            : "pointer-events-none invisible -translate-y-2 opacity-0 duration-150",
         )}
       >
         <nav

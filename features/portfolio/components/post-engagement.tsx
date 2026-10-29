@@ -280,11 +280,15 @@ export function PostEngagement({
       </span>
 
       <div ref={shareMenuRef} className="relative">
-        {copyToastVisible ? (
-          <span className="pointer-events-none absolute -top-11 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-blue/12 bg-white px-3 py-1.5 text-[0.76rem] font-medium text-blue shadow-[0_10px_28px_rgba(47,84,235,0.14)] animate-fade-in dark:border-blue-dark/15 dark:bg-navy-800 dark:text-blue-dark">
-            URL copied
-          </span>
-        ) : null}
+        <span
+          aria-hidden={!copyToastVisible}
+          className={cn(
+            "pointer-events-none absolute -top-11 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-blue/12 bg-white px-3 py-1.5 text-[0.76rem] font-medium text-blue shadow-[0_10px_28px_rgba(47,84,235,0.14)] transition-[opacity,translate] ease-out-strong dark:border-blue-dark/15 dark:bg-navy-800 dark:text-blue-dark",
+            copyToastVisible ? "duration-200" : "translate-y-1 opacity-0 duration-150",
+          )}
+        >
+          URL copied
+        </span>
 
         <button
           type="button"
@@ -308,55 +312,59 @@ export function PostEngagement({
           {entry.shares} shares
         </button>
 
-        {shareMenuOpen ? (
-          <div
-            role="menu"
-            aria-label="Share article"
-            className="absolute left-0 top-[calc(100%+0.65rem)] z-20 w-[min(18rem,calc(100vw-2.5rem))] animate-fade-in rounded-[1.1rem] border border-blue/10 bg-white p-2.5 shadow-[0_18px_48px_rgba(15,22,36,0.12)] dark:border-blue-dark/12 dark:bg-navy-800 dark:shadow-[0_18px_48px_rgba(0,0,0,0.34)]"
-          >
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => void handleShareAction("copy")}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
-              >
-                <CopyIcon className="h-4 w-4 stroke-2" />
-                Copy URL
-              </button>
+        <div
+          role="menu"
+          aria-label="Share article"
+          inert={!shareMenuOpen}
+          className={cn(
+            "absolute left-0 top-[calc(100%+0.65rem)] z-20 w-[min(18rem,calc(100vw-2.5rem))] origin-top-left rounded-[1.1rem] border border-blue/10 bg-white p-2.5 shadow-[0_18px_48px_rgba(15,22,36,0.12)] transition-[opacity,scale,translate,visibility] ease-out-strong dark:border-blue-dark/12 dark:bg-navy-800 dark:shadow-[0_18px_48px_rgba(0,0,0,0.34)]",
+            shareMenuOpen
+              ? "duration-200"
+              : "pointer-events-none invisible -translate-y-1 scale-[0.97] opacity-0 duration-150",
+          )}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => void handleShareAction("copy")}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
+            >
+              <CopyIcon className="h-4 w-4 stroke-2" />
+              Copy URL
+            </button>
 
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => void handleShareAction("whatsapp")}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
-              >
-                <WhatsappIcon className="h-4 w-4 stroke-2" />
-                WhatsApp
-              </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => void handleShareAction("whatsapp")}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
+            >
+              <WhatsappIcon className="h-4 w-4 stroke-2" />
+              WhatsApp
+            </button>
 
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => void handleShareAction("telegram")}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
-              >
-                <TelegramIcon className="h-4 w-4 stroke-2" />
-                Telegram
-              </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => void handleShareAction("telegram")}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
+            >
+              <TelegramIcon className="h-4 w-4 stroke-2" />
+              Telegram
+            </button>
 
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => void handleShareAction("linkedin")}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
-              >
-                <LinkedInIcon className="h-4 w-4 stroke-2" />
-                LinkedIn
-              </button>
-            </div>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => void handleShareAction("linkedin")}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-[0.9rem] border border-blue/8 px-3 py-2.5 text-left text-sm text-ink/72 transition-colors hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark"
+            >
+              <LinkedInIcon className="h-4 w-4 stroke-2" />
+              LinkedIn
+            </button>
           </div>
-        ) : null}
+        </div>
       </div>
 
       <button
