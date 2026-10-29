@@ -149,7 +149,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
       </div>
 
       {lightboxIndex !== null && lightboxImages[lightboxIndex] ? (
-        <div className="fixed inset-0 z-1200 flex items-center justify-center bg-black/92">
+        <div className="fixed inset-0 z-1200 flex items-center justify-center bg-black/92 transition-opacity duration-250 ease-out-strong starting:opacity-0">
           <button
             type="button"
             aria-label="Close image preview"
@@ -189,7 +189,7 @@ export function ProjectGallery({ items }: ProjectGalleryProps) {
           ) : null}
 
           <div className="flex min-h-screen items-center justify-center px-5 py-20">
-              <div className="relative h-[88vh] w-[92vw]">
+              <div className="relative h-[88vh] w-[92vw] transition-[opacity,scale] duration-250 ease-out-strong starting:scale-[0.96] starting:opacity-0">
                 <GalleryImage
                   src={lightboxImages[lightboxIndex].imageSrc}
                   alt={
