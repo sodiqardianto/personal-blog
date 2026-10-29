@@ -4,7 +4,7 @@
  */
 
 const buttonBase =
-  "items-center justify-center [transition:translate_250ms_ease,opacity_250ms_ease,border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 active:scale-[0.97]";
+  "items-center justify-center [transition:translate_250ms_ease,opacity_250ms_ease,border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:hover:-translate-y-0.5 motion-safe:active:scale-[0.97]";
 
 export const buttonStyles = {
   primary: `${buttonBase} bg-ink text-paper hover:opacity-90`,
@@ -13,7 +13,7 @@ export const buttonStyles = {
 
 /** Round icon button used for the theme and menu toggles. */
 export const iconButtonStyles =
-  "size-[38px] cursor-pointer items-center justify-center rounded-full border border-line [transition:border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:border-accent active:scale-[0.97]";
+  "size-[38px] cursor-pointer items-center justify-center rounded-full border border-line [transition:border-color_250ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:border-accent motion-safe:active:scale-[0.97]";
 
 /** Underline grows on hover; `aria-current` keeps it drawn for the active link. */
 export const navLinkStyles =
@@ -24,7 +24,7 @@ export const eyebrowStyles =
   "font-mono text-[0.8rem] tracking-[0.02em] text-accent-2 before:text-soft before:content-['//_']";
 
 export const cardStyles =
-  "rounded-2xl border border-line bg-surface [transition:translate_200ms_ease,border-color_200ms_ease,box-shadow_200ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)] active:scale-[0.985]";
+  "rounded-2xl border border-line bg-surface [transition:translate_200ms_ease,border-color_200ms_ease,box-shadow_200ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)] motion-safe:active:scale-[0.985]";
 
 export const tagStyles =
   "rounded-full border border-line px-2 py-0.5 font-mono text-[0.72rem] text-soft";
@@ -49,4 +49,4 @@ export const tokenStyles = {
  * the header, which adds `on` once the element enters the viewport.
  */
 export const revealStyles =
-  "sr translate-y-[18px] opacity-0 transition-[opacity,translate] duration-550 ease-out-strong [&.on]:translate-none [&.on]:opacity-100";
+  "sr motion-safe:translate-y-[18px] opacity-0 transition-[opacity,translate] duration-550 ease-out-strong [&.on]:translate-none [&.on]:opacity-100";

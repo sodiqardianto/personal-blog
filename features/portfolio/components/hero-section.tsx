@@ -19,7 +19,7 @@ export function HeroSection() {
       <div className="relative mx-auto grid min-w-0 max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-14 md:px-8">
         <div className="min-w-0">
           <div className="relative mb-6 inline-flex items-center gap-2">
-            <span className="relative size-[7px] rounded-full bg-accent-2 after:absolute after:inset-0 after:animate-status-pulse after:rounded-full after:bg-accent-2" />
+            <span className="relative size-[7px] rounded-full bg-accent-2 after:absolute after:inset-0 motion-safe:after:animate-status-pulse after:rounded-full after:bg-accent-2" />
             <span className={eyebrowStyles}>available for projects</span>
           </div>
 

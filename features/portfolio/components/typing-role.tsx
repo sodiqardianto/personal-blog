@@ -58,7 +58,7 @@ export function TypingRole() {
         <span
           className={cn(
             "ml-[3px] inline-block h-[1.05em] w-2 bg-accent align-[-2px] transition-opacity duration-300",
-            isDone ? "opacity-0" : "animate-typing-blink",
+            isDone ? "opacity-0" : "motion-safe:animate-typing-blink",
           )}
         />
       </span>

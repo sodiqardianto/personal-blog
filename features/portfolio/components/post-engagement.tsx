@@ -284,7 +284,7 @@ export function PostEngagement({
           aria-hidden={!copyToastVisible}
           className={cn(
             "pointer-events-none absolute -top-11 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-blue/12 bg-white px-3 py-1.5 text-[0.76rem] font-medium text-blue shadow-[0_10px_28px_rgba(47,84,235,0.14)] transition-[opacity,translate] ease-out-strong dark:border-blue-dark/15 dark:bg-navy-800 dark:text-blue-dark",
-            copyToastVisible ? "duration-200" : "translate-y-1 opacity-0 duration-150",
+            copyToastVisible ? "duration-200" : "motion-safe:translate-y-1 opacity-0 duration-150",
           )}
         >
           URL copied
@@ -296,7 +296,7 @@ export function PostEngagement({
           aria-expanded={shareMenuOpen}
           aria-haspopup="menu"
           className={cn(
-            "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
+            "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
             shareMenuOpen &&
               "border-blue/20 text-blue dark:border-blue-dark/25 dark:text-blue-dark",
           )}
@@ -304,7 +304,7 @@ export function PostEngagement({
           <span
             className={cn(
               "inline-flex",
-              shareAnimating && "animate-engagement-share",
+              shareAnimating && "motion-safe:animate-engagement-share",
             )}
           >
             <ShareIcon className="h-4 w-4 stroke-2" />
@@ -320,7 +320,7 @@ export function PostEngagement({
             "absolute left-0 top-[calc(100%+0.65rem)] z-20 w-[min(18rem,calc(100vw-2.5rem))] origin-top-left rounded-[1.1rem] border border-blue/10 bg-white p-2.5 shadow-[0_18px_48px_rgba(15,22,36,0.12)] transition-[opacity,scale,translate,visibility] ease-out-strong dark:border-blue-dark/12 dark:bg-navy-800 dark:shadow-[0_18px_48px_rgba(0,0,0,0.34)]",
             shareMenuOpen
               ? "duration-200"
-              : "pointer-events-none invisible -translate-y-1 scale-[0.97] opacity-0 duration-150",
+              : "pointer-events-none invisible motion-safe:-translate-y-1 motion-safe:scale-[0.97] opacity-0 duration-150",
           )}
         >
           <div className="grid grid-cols-2 gap-2">
@@ -371,8 +371,8 @@ export function PostEngagement({
         type="button"
         onClick={handleLike}
         className={cn(
-          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
-          likeAnimating && "animate-engagement-like-btn",
+          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-blue/10 bg-white px-3.5 py-2 text-[0.88rem] font-medium text-ink/60 [transition:border-color_150ms_ease,color_150ms_ease,scale_160ms_cubic-bezier(0.23,1,0.32,1)] motion-safe:active:scale-[0.97] hover:border-blue/20 hover:text-blue dark:border-blue-dark/12 dark:bg-navy-700 dark:text-slate-300 dark:hover:border-blue-dark/25 dark:hover:text-blue-dark",
+          likeAnimating && "motion-safe:animate-engagement-like-btn",
           entry.liked &&
             "border-rose-200 text-rose-600 dark:border-rose-400/30 dark:text-rose-300",
         )}
@@ -381,7 +381,7 @@ export function PostEngagement({
           key={likeAnimationKey}
           className={cn(
             "inline-flex",
-            likeAnimating && "animate-engagement-like",
+            likeAnimating && "motion-safe:animate-engagement-like",
           )}
         >
           <HeartIcon
