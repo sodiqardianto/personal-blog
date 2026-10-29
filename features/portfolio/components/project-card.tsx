@@ -45,7 +45,7 @@ export function ProjectCard({
               fill
               preload={preload}
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-[1.03]"
             />
           ) : (
             <span className="relative z-1 font-display text-2xl font-bold text-white/90">

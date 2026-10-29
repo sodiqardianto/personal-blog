@@ -17,14 +17,14 @@ export const iconButtonStyles =
 
 /** Underline grows on hover; `aria-current` keeps it drawn for the active link. */
 export const navLinkStyles =
-  "relative text-soft transition-colors duration-250 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-accent after:transition-[width] after:duration-250 hover:text-ink hover:after:w-full aria-[current=location]:text-ink aria-[current=location]:after:w-full";
+  "relative text-soft transition-colors duration-250 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-[scale] after:duration-200 after:ease-out-strong hover:text-ink hover:after:scale-x-100 aria-[current=location]:text-ink aria-[current=location]:after:scale-x-100";
 
 /** Section eyebrow rendered as a code comment: `// label`. */
 export const eyebrowStyles =
   "font-mono text-[0.8rem] tracking-[0.02em] text-accent-2 before:text-soft before:content-['//_']";
 
 export const cardStyles =
-  "rounded-2xl border border-line bg-surface transition-[translate,border-color,box-shadow] duration-350 hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)]";
+  "rounded-2xl border border-line bg-surface transition-[translate,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_48px_-28px_rgba(20,23,26,0.35)]";
 
 export const tagStyles =
   "rounded-full border border-line px-2 py-0.5 font-mono text-[0.72rem] text-soft";
